@@ -92,27 +92,25 @@ public class ProductService {
 	}
 	
 	// get all products detail (to display in page Home)
-	public List<ProductDto> getAllProductsDetail(){
-		List<Product> products = getAllProducts();
-		List<ProductDto> result = new ArrayList<ProductDto>();
+	public List<Product> getAllProductsDetail(){
+		List<Product> result = new ArrayList<Product>();
 		List<String> listNames = getAllProductsNames();
 		for (String name : listNames) {
 			Product product = getFirstProductByName(name);
-			List<ProductDetailDto> productDetail = getProductDetail(name);
-			result.add(new ProductDto(product, productDetail));
+			result.add(product);
 		}
 		return result;
 	}
 	
 	// get all products detail by type id (to display in page Home)
-	public List<ProductDto> getAllProductsDetailByTypeId(Long type_id){
-		List<ProductDto> products = getAllProductsDetail();
-		List<ProductDto> result = new ArrayList<ProductDto>();
+	public List<Product> getAllProductsDetailByTypeId(Long type_id){
+		List<Product> products = getAllProductsDetail();
+		List<Product> result = new ArrayList<Product>();
 		if(type_id == 0) {
 			return products;
 		}
 		else {
-			for (ProductDto productDto : products) {
+			for (Product productDto : products) {
 				if(productDto.getType().getId().equals(type_id)) {
 					result.add(productDto);
 				}
@@ -122,10 +120,10 @@ public class ProductService {
 	}
 	
 	// get all products detail by brand id 
-		public List<ProductDto> getAllProductsDetailByBrandId(Long brand_id){
-			List<ProductDto> products = getAllProductsDetail();
-			List<ProductDto> result = new ArrayList<ProductDto>();
-			for (ProductDto productDto : products) {
+		public List<Product> getAllProductsDetailByBrandId(Long brand_id){
+			List<Product> products = getAllProductsDetail();
+			List<Product> result = new ArrayList<Product>();
+			for (Product productDto : products) {
 				if(productDto.getBrand().getId().equals(brand_id)) {
 					result.add(productDto);
 				}

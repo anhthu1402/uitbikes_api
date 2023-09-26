@@ -36,7 +36,7 @@ public class ProductController {
 		return productService.getListProductsByName(name);
 	}
 	
-	// get product detail by name
+	// get product detail by name (to use in page ProductDetail)
 	@RequestMapping(value = "/names/{name}", method = RequestMethod.GET)
 	public ProductDto getProductDetailByName(@PathVariable(value = "name") String name) {
 		return productService.getProductDetailByName(name);
@@ -44,19 +44,19 @@ public class ProductController {
 	
 	// get all products detail (to display in page Home)
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
-	public List<ProductDto> getAllProductsDetail(){
+	public List<Product> getAllProductsDetail(){
 		return productService.getAllProductsDetail();
 	}
 	
 	// get all products detail by type id (to display in page Home)
 	@RequestMapping(value = "/details/type/{type_id}", method = RequestMethod.GET)
-	public List<ProductDto> getAllProductsDetailByTypeId(@PathVariable(value = "type_id") Long type_id){
+	public List<Product> getAllProductsDetailByTypeId(@PathVariable(value = "type_id") Long type_id){
 		return productService.getAllProductsDetailByTypeId(type_id);
 	}
 	
 	// get all products detail by brand id 
 	@RequestMapping(value = "/details/brand/{brand_id}", method = RequestMethod.GET)
-	public List<ProductDto> getAllProductsDetailByBrandId(@PathVariable(value = "brand_id") Long brand_id){
+	public List<Product> getAllProductsDetailByBrandId(@PathVariable(value = "brand_id") Long brand_id){
 		return productService.getAllProductsDetailByBrandId(brand_id);
 	}
 	
