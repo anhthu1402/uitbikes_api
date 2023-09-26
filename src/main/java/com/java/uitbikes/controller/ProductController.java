@@ -3,6 +3,7 @@ package com.java.uitbikes.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import com.java.uitbikes.model.Product;
 import com.java.uitbikes.service.ProductService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/api/products")
 public class ProductController {
 	@Autowired 
@@ -37,7 +39,7 @@ public class ProductController {
 	}
 	
 	// get product detail by name (to use in page ProductDetail)
-	@RequestMapping(value = "/names/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/detail/names/{name}", method = RequestMethod.GET)
 	public ProductDto getProductDetailByName(@PathVariable(value = "name") String name) {
 		return productService.getProductDetailByName(name);
 	}
