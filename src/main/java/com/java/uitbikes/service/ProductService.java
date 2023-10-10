@@ -9,13 +9,28 @@ import org.springframework.stereotype.Service;
 
 import com.java.uitbikes.dto.ProductDetailDto;
 import com.java.uitbikes.dto.ProductDto;
+import com.java.uitbikes.model.Brand;
 import com.java.uitbikes.model.Product;
+import com.java.uitbikes.model.Type;
+import com.java.uitbikes.repository.BrandRepository;
 import com.java.uitbikes.repository.ProductRepository;
+import com.java.uitbikes.repository.TypeRepository;
 
 @Service
 public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	TypeRepository typeRepository;
+	
+	@Autowired
+	BrandRepository brandRepository;
+	
+	// create product
+	public Product createProduct(Product p) {
+		return productRepository.save(p);
+	}
 	
 	// get all products (for read products in admin)
 	public List<Product> getAllProducts() {
@@ -110,19 +125,25 @@ public class ProductService {
 			return products;
 		}
 		else {
-			for (Product productDto : products) {
-				if(productDto.getType().getId().equals(type_id)) {
-					result.add(productDto);
+			Optional<Type> type = typeRepository.findById(type_id);
+			if(type.isPresent()) {
+				for (Product productDto : products) {
+					if(productDto.getType().getId().equals(type_id)) {
+						result.add(productDto);
+					}
 				}
+				return result;
 			}
-			return result;
+			return null;
 		}
 	}
 	
 	// get all products detail by brand id 
-		public List<Product> getAllProductsDetailByBrandId(Long brand_id){
-			List<Product> products = getAllProductsDetail();
-			List<Product> result = new ArrayList<Product>();
+	public List<Product> getAllProductsDetailByBrandId(Long brand_id){
+		List<Product> products = getAllProductsDetail();
+		List<Product> result = new ArrayList<Product>();
+		Optional<Brand> brand = brandRepository.findById(brand_id);
+		if(brand.isPresent()) {
 			for (Product productDto : products) {
 				if(productDto.getBrand().getId().equals(brand_id)) {
 					result.add(productDto);
@@ -130,4 +151,62 @@ public class ProductService {
 			}
 			return result;
 		}
+		return null;
+	}
+	
+	// set type
+	public Product setType(Long p_id, Long type_id) {
+		Optional<Product> product = productRepository.findById(p_id);
+		Optional<Type> type = typeRepository.findById(type_id);
+		if(type.isPresent() && product.isPresent()) {
+			Product p = product.get();
+			Type t = type.get();
+			p.setType(t);
+			return productRepository.save(p);
+		}
+		return null;
+	}
+	
+	// set brand
+		public Product setBrand(Long p_id, Long brand_id) {
+			Optional<Product> product = productRepository.findById(p_id);
+			Optional<Brand> brand = brandRepository.findById(brand_id);
+			if(brand.isPresent() && product.isPresent()) {
+				Product p = product.get();
+				Brand b = brand.get();
+				p.setBrand(b);
+				return productRepository.save(p);
+			}
+			return null;
+		}
+	
+	// update product
+	public Product updateProduct(Long id, Product pDetail) {
+		Optional<Product> product = productRepository.findById(id);
+		if(product.isPresent()) {
+			Product p = product.get();
+			p.setBrand(pDetail.getBrand());
+			p.setCc(pDetail.getCc());
+			p.setColor(pDetail.getColor());
+			p.setDate(pDetail.getDate());
+			p.setDescribe(pDetail.getDescribe());
+			p.setImage(pDetail.getImage());
+			p.setIsActive(pDetail.getIsActive());
+			p.setName(pDetail.getName());
+			p.setPrice(pDetail.getPrice());
+			p.setQuantity(pDetail.getQuantity());
+			p.setType(pDetail.getType());
+			return productRepository.save(p);
+		}
+		return productRepository.save(pDetail);
+	}
+	
+	// delete product
+//	public Boolean deleteProduct(Long id) {
+//		Optional<Product> product = productRepository.findById(id);
+//		if(product.isPresent()) {
+//			Product p = product.get();
+//			
+//		}
+//	}
 }

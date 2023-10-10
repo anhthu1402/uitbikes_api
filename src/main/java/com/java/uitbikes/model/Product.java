@@ -23,7 +23,7 @@ public class Product {
 	@Column(name = "cc")
 	private Long cc;
 	
-	@Column(name = "date")
+	@Column(name = "date_manu")
 	private Long date;
 	
 	@Column(name = "is_active")
@@ -32,7 +32,7 @@ public class Product {
 	@Column(name = "quantity")
 	private Long quantity;
 	
-	@Column(name = "describe")
+	@Column(name = "describe_product")
 	private String describe;
 	
 	@Column(name = "color")
@@ -46,11 +46,11 @@ public class Product {
 	
 	@ManyToOne
 	@JoinColumn(name = "type_id", referencedColumnName = "type_id")
-	private Type type;
+	private Type type = new Type();
 	
 	@ManyToOne
 	@JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
-	private Brand brand;
+	private Brand brand = new Brand();
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
