@@ -201,12 +201,15 @@ public class ProductService {
 		return productRepository.save(pDetail);
 	}
 	
-	// delete product
-//	public Boolean deleteProduct(Long id) {
-//		Optional<Product> product = productRepository.findById(id);
-//		if(product.isPresent()) {
-//			Product p = product.get();
-//			
-//		}
-//	}
+	// change product's active
+	public Boolean updateProductActive(Long id, Long isActive) {
+		Optional<Product> product = productRepository.findById(id);
+		if(product.isPresent()) {
+			Product p = product.get();
+			p.setIsActive(isActive);
+			productRepository.save(p);
+			return true;
+		}
+		return false;
+	}
 }
