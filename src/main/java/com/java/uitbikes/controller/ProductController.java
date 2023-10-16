@@ -87,6 +87,12 @@ public class ProductController {
 		return productService.setBrand(p_id, brand_id);
 	}
 	
+	// change product's active
+	@RequestMapping(value = "is-active/{id}/{is-active}", method = RequestMethod.PUT)
+	public Boolean updateProductActive(@PathVariable(value = "id") Long id, @PathVariable(value = "is-active") Long isActive) {
+		return productService.updateProductActive(id, isActive);
+	}
+	
 	// update product by id
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Product updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product p) {
