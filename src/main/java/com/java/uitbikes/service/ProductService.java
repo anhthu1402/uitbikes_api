@@ -64,7 +64,9 @@ public class ProductService {
 		List<ProductDetailDto> result = new ArrayList<ProductDetailDto>();
 		for (Product product : products) {
 			if(product.getName().equals(name)){
-				result.add(new ProductDetailDto(product));
+				if(product.getIsActive()==1) {
+					result.add(new ProductDetailDto(product));
+				}
 			}
 		}
 		return result;
@@ -75,7 +77,9 @@ public class ProductService {
 		List<Product> products = getAllProducts();
 		for (Product product : products) {
 			if(product.getName().equals(name)){
-				return product;
+				if(product.getIsActive()==1) {
+					return product;
+				}
 			}
 		}
 		return null;
