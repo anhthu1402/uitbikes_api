@@ -1,5 +1,7 @@
 package com.java.uitbikes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -51,6 +54,10 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
 	private Brand brand = new Brand();
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "product")
+	private Cart cart;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -150,6 +157,14 @@ public class Product {
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 	
 }

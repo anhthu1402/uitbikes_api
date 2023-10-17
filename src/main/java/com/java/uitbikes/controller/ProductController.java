@@ -75,6 +75,12 @@ public class ProductController {
 		return productService.getAllProductsNames();
 	}
 	
+	// get list colors
+	@RequestMapping(value = "/colors", method = RequestMethod.GET)
+	public List<String> getAllProductColors(){
+		return productService.getAllProductColors();
+	}
+	
 	// set type
 	@RequestMapping(value = "/{p_id}/type/{type_id}", method = RequestMethod.PUT)
 	public Product setType(@PathVariable(value = "p_id") Long p_id, @PathVariable(value = "type_id") Long type_id) {

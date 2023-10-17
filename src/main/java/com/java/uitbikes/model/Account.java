@@ -16,20 +16,12 @@ import jakarta.persistence.Table;
 
 public class Account {
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "username")
 	private String username;
 	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-//	private Customer customer;
-	
-
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
-//    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
-
     
 	@Column(name= "password")
 	private String pw;
