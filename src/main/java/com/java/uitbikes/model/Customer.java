@@ -49,8 +49,7 @@ public class Customer {
 	@Column(name = "id_number")
 	private Long idNumber;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
 	private Account account;
 	
 	@JsonIgnore

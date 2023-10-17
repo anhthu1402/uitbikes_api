@@ -19,7 +19,8 @@ public class Account {
 	@Column(name = "username")
 	private String username;
 	
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
     
 	@Column(name= "password")

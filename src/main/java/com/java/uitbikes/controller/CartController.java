@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.java.uitbikes.dto.CartDto;
 import com.java.uitbikes.model.Cart;
 import com.java.uitbikes.service.CartService;
 
@@ -19,14 +20,14 @@ public class CartController {
 	CartService cartService;
 	
 	// add to cart
-	@RequestMapping(value = "/{customer_id}", method = RequestMethod.POST)
-	public Cart addToCart(@RequestBody Cart cart, @PathVariable(value = "customer_id") Long customer_id) {
-		return cartService.addToCart(cart, customer_id);
+	@RequestMapping(value = "/customer/{customer_id}/product/{p_id}", method = RequestMethod.POST)
+	public Cart addToCart(@RequestBody Cart cart, @PathVariable(value = "customer_id") Long customer_id, @PathVariable(value = "p_id") Long p_id) {
+		return cartService.addToCart(cart, customer_id, p_id);
 	}
 	
 	// get all customer's carts
-	@RequestMapping(value = "/{customer_id}", method = RequestMethod.GET)
-	public List<Cart> getAllCustomerCarts(@PathVariable(value = "customer_id") Long customer_id){
+	@RequestMapping(value = "/customer/{customer_id}", method = RequestMethod.GET)
+	public List<CartDto> getAllCustomerCarts(@PathVariable(value = "customer_id") Long customer_id){
 		return cartService.getAllCustomerCarts(customer_id);
 	}
 	
