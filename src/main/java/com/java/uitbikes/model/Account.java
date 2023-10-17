@@ -45,10 +45,7 @@ public class Account {
 		this.avatar=avartar;
 		this.isAdmin=false;
 	}
-	public String getName() {
-		return username;
-	}
-
+	
 	public String getPw() {
 		return pw;
 	}
@@ -63,8 +60,12 @@ public class Account {
 		return avatar;
 	}
 	
-	public void setName(String name) {
-		this.username = name;
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public void setPw(String pw) {
 		this.pw = pw;
