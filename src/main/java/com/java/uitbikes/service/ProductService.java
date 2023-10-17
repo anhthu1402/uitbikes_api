@@ -103,6 +103,19 @@ public class ProductService {
 		return result;
 	}
 	
+	// get list colors
+	public List<String> getAllProductColors(){
+		List<String> result=new ArrayList<String>();
+		List<Product> products=getAllProducts();
+		for (Product product : products) {
+			String color = product.getColor();
+			if(!result.contains(color)) {
+				result.add(color);
+			}
+		}
+		return result;
+	}
+	
 	// get product detail by name
 	public ProductDto getProductDetailByName(String name) {
 		Product product = getFirstProductByName(name);

@@ -1,6 +1,10 @@
 package com.java.uitbikes.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -9,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -48,21 +53,12 @@ public class Customer {
 	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
 	private Account account;
 	
-	
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
+	private List<Cart> carts = new ArrayList<Cart>();
 	
 	public Customer() {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public Customer(Date rD) {
-		this.registerDate=rD;
-		this.address =null;
-		this.balance=null;
-		this.date=null;
-		this.gender=null;
-		this.idNumber=null;
-		this.name=null;
-		this.phone=null;
 	}
 	
 	public Long getId() {
@@ -134,5 +130,21 @@ public class Customer {
 	}
 	public void setGender(Long gender) {
 		this.gender = gender;
+	}
+
+	public List<Cart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(List<Cart> carts) {
+		this.carts = carts;
+	}
+	
+	public void addCart(Cart cart) {
+		this.carts.add(cart);
+	}
+	
+	public void removeCart(Cart cart) {
+		this.carts.remove(cart);
 	}
 }
