@@ -34,7 +34,7 @@ public class ChargeRequestController {
 	
 	//update request's status
 	@RequestMapping(value = "/{request_id}/status/{status}", method = RequestMethod.PUT)
-	public ChargeRequest updateBrand(@PathVariable(value = "request_id") Long request_id, @PathVariable(value = "status") int status) {
+	public ChargeRequest updateRequestStatus(@PathVariable(value = "request_id") Long request_id, @PathVariable(value = "status") int status) {
 		return chargeRequestService.updateRequestStatus(request_id, status);
 	}
 }
