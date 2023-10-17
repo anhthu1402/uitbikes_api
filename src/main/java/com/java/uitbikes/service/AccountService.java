@@ -59,7 +59,7 @@ public class AccountService {
 		public Boolean signinAccount(String username, String password) {
 			List<Account> accounts = getAllAccounts();
 			for (Account account : accounts) {
-				if(account.getName().equals(username)) {
+				if(account.getUsername().equals(username)) {
 					if(account.getPw().equals(password)) {
 						return true;
 					}
