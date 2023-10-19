@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.java.uitbikes.dto.InvoiceDetailDto;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -23,17 +21,14 @@ public class Invoice {
 	private Long total;
 	
 	@Column(name = "status")
-	private int status;
+	private int status = 0;
 	
-	@Column(name = "customer_id")
-	private Long customerId;
+	@ManyToOne
+	@JoinColumn(name="customer_id", referencedColumnName = "customer_id")
+	private Customer customer;
 	
-	@OneToMany
-    @JoinTable(name="invoice_detail",
-            joinColumns = @JoinColumn(name="invoice_id"),
-            inverseJoinColumns = @JoinColumn(name="customer_id")
-    )
-    private List<InvoiceDetailDto> details = new ArrayList<>();
+	@OneToMany(mappedBy="invoice", cascade = CascadeType.ALL)
+	private List<InvoiceDetail> details = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -67,23 +62,24 @@ public class Invoice {
 		this.status = status;
 	}
 
-	public Long getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
-	public List<InvoiceDetailDto> getDetails() {
+	public List<InvoiceDetail> getDetails() {
 		return details;
 	}
 
-	public void setDetails(List<InvoiceDetailDto> details) {
+	public void setDetails(List<InvoiceDetail> details) {
 		this.details = details;
 	}
 	
-	public void addProduct(InvoiceDetailDto product) {
-		this.details.add(product);
+	public void addProduct(Product product, int quantity) {
+		InvoiceDetail invoicedetail = new InvoiceDetail(this, product, quantity);
+		details.add(invoicedetail);
 	}
 }

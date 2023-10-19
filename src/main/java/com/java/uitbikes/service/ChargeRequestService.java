@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.java.uitbikes.repository.ChargeRequestRepository;
+import com.java.uitbikes.repository.CustomerRepository;
 import com.java.uitbikes.model.ChargeRequest;
+import com.java.uitbikes.model.Customer;
 
 @Service
 public class ChargeRequestService {
 	@Autowired
 	ChargeRequestRepository chargeRequestRepository;
+	
+	@Autowired
+	CustomerRepository customerRepository;
 	
 	//create request
 	public ChargeRequest createRequest(ChargeRequest request) {
@@ -26,8 +31,8 @@ public class ChargeRequestService {
 	
 	//get all requests by cutomer_id
 	public List<ChargeRequest> getAllRequestsByCustomerId(Long customer_id) {
-		List<ChargeRequest> requests = chargeRequestRepository.findByCustomerId(customer_id);
-		return requests;
+		Customer customer = customerRepository.findById(customer_id).get();
+		return customer.getChargeRequests();
 	}
 	
 	//update request's status

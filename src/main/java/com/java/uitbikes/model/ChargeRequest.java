@@ -11,8 +11,9 @@ public class ChargeRequest {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "customer_id")
-	private Long customerId;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+	private Customer customer;
 
 	@Column(name = "date_req")
 	private Date date;
@@ -34,12 +35,12 @@ public class ChargeRequest {
 		this.id = id;
 	}
 	
-	public Long getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Date getDate() {

@@ -1,23 +1,66 @@
 package com.java.uitbikes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "invoice_detail")
-@IdClass(InvoiceDetailID.class)
 public class InvoiceDetail {
 	@Id
-	@Column(name = "invoice_id")
-	private Long invoice_id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+    private Long id;
 	
-	@Id
-	@Column(name = "p_id")
-	private String p_id;
-	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "invoice_id")
+    private Invoice invoice;
+ 
+    @ManyToOne
+    @JoinColumn(name = "p_id")
+    private Product product;
+
 	@Column(name = "quantity")
 	private int quantity;
 	
-	@ManyToOne
-	@JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
-	private Invoice invoice;
+	public InvoiceDetail() {}
+	
+	public InvoiceDetail(Invoice invoice, Product product, int quantity) {
+		this.invoice = invoice;
+		this.product = product;
+		this.quantity = quantity;
+	}
+	
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 }
