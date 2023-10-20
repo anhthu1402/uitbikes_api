@@ -26,19 +26,19 @@ public class Account {
 	private String email;
 	
 	@Column(name= "is_admin")
-	private Boolean isAdmin = false;
+	private Boolean isAdmin;
 	
 	@Column(name= "avatar")
 	private String avatar;
 	
 	public Account() {}
 	
-	public Account(String username, String password, String email, String avartar) {
+	public Account(String username, String password, String email, String avatar) {
 		this.username = username;
 		this.customer.setId(null);
 		this.pw=password;
 		this.email=email;
-		this.avatar=avartar;
+		this.avatar=avatar;
 		this.isAdmin=false;
 	}
 	

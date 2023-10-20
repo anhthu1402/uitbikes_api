@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.Customer;
 import com.java.uitbikes.repository.AccountRepository;
@@ -34,38 +35,43 @@ public class AccountService {
 	
 	
 	// get all accounts (for read in admin)
-		public List<Account> getAllAccounts() {
-			return accountRepository.findAll();
+		public List<AccountDto> getAllAccounts() {
+			List<Account> accounts = accountRepository.findAll();
+			List<AccountDto> result = new ArrayList<AccountDto>();
+			for (Account account : accounts) {
+				result.add(new AccountDto(account));				
+			}
+			return result;
 		}
 	
 	// get accounts by username
-		public Account getListAccountsByName(String username){
+		public AccountDto getListAccountsByName(String username){
 			Account account = accountRepository.findByUsername(username).get();
-			return account;
+			return new AccountDto(account);
 		}
 		//get list account of admin
-		public List<Account> getListAccountAdmin(){
-			List<Account> accounts = getAllAccounts();
-			List<Account> list = new ArrayList<Account>();
-			for (Account account : accounts) {
+		public List<AccountDto> getListAccountAdmin(){
+			List<AccountDto> accounts = getAllAccounts();
+			List<AccountDto> result = new ArrayList<AccountDto>();
+			for (AccountDto account : accounts) {
 				if(account.getIsAdmin()==true) {
-					list.add(account);
+					result.add(account);
 				}
 			}
-			return list;
+			return result;
 		}
 		
 		//sign in by password and username
-		public Boolean signinAccount(String username, String password) {
-			List<Account> accounts = getAllAccounts();
+		public AccountDto signinAccount(String username, String password) {
+			List<Account> accounts = accountRepository.findAll();
 			for (Account account : accounts) {
 				if(account.getUsername().equals(username)) {
 					if(account.getPw().equals(password)) {
-						return true;
+						return new AccountDto(account);
 					}
 				}
 			}
-			return false;
+			return null;
 		}
 		//sign in for admin
 		public Account getIsAccountAdmin(String username, String password) {
@@ -115,13 +121,4 @@ public class AccountService {
 			return false;
 		}
 		
-		//delete account
-//		public void deleteAccount(String username) {
-//			Optional<Account> account = accountRepository.findById(username);
-//			Account a = account.get(); 
-//			accountRepository.deleteById(username);
-//			customerRepository.deleteById(a.getCustomer().getId());
-//		}
-	
-	
 }

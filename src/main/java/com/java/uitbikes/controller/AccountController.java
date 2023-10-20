@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.model.Account;
-import com.java.uitbikes.model.Customer;
 import com.java.uitbikes.service.AccountService;
 import com.java.uitbikes.service.CustomerService;
 
@@ -26,7 +26,7 @@ public class AccountController {
 	@Autowired 
 	CustomerService customerService;
 	
-	 //create account (not done)
+	 //create account 
 		@RequestMapping(value = "", method = RequestMethod.POST)
 		public Account createAccount(@RequestBody Account a) {
 			return accountService.createAccount(a);
@@ -38,42 +38,52 @@ public class AccountController {
 	
 	// get all accounts (for in admin)
 		@RequestMapping(value = "", method = RequestMethod.GET)
-		public List<Account> getAllAccounts(){ 
+		public List<AccountDto> getAllAccounts(){ 
 			return accountService.getAllAccounts();
 		}
-	
+	// get account by username
+		@RequestMapping(value = "/{username}", method = RequestMethod.GET)
+		public AccountDto getListAccountsByName(@PathVariable(value = "username") String username) {
+			return accountService.getListAccountsByName(username);
+		}
 	// get list accounts of admin
 		@RequestMapping(value = "/admin", method = RequestMethod.GET)
-		public List<Account> getListAccountAdmin(){
+		public List<AccountDto> getListAccountAdmin(){
 			return accountService.getListAccountAdmin();
 		}
-	
-//	 admin/user 
-		@RequestMapping(value = "/username/{username}/{password}", method = RequestMethod.GET)
-		public Account getIsAccountAdmin(@PathVariable(value = "username") String username, @PathVariable(value = "password") String password){
+
+	//	 admin/user 
+		@RequestMapping(value = "/username/{username}/{pw}", method = RequestMethod.GET)
+		public Account getIsAccountAdmin(@PathVariable(value = "username") String username, @PathVariable(value = "pw") String password){
 			return accountService.getIsAccountAdmin(username, password);
 		}
 	
-//	// signin account by username 
-//		@RequestMapping(value = "/{username}/{brand_id}", method = RequestMethod.PUT)
-//		public Product setBrand(@PathVariable(value = "p_id") Long p_id, @PathVariable(value = "brand_id") Long brand_id) {
-//			return productService.setBrand(p_id, brand_id);
-//		}
-	
+	// signin account by password,username
+		@RequestMapping(value = "/{username}/pw/{pw}", method = RequestMethod.GET)
+		public AccountDto signinAccount(@PathVariable(value = "username") String username, @RequestBody String password) {
+			return accountService.signinAccount(username, password);
+		}
+//	//sign in for admin
+//		@RequestMapping(value = "/username/{username}/password/{password}/isAdmin", method = RequestMethod.GET)
+//		public Account getIsAccountAdmin(@PathVariable(value = "username") String username, @RequestBody String password) {
+//			return accountService.getIsAccountAdmin(username, password);
+//		}	
+//		
+		
 		//update password 
-		@RequestMapping(value = "/{username}/password/{password}", method = RequestMethod.PUT)
-		public boolean updatePassword(@PathVariable(value = "username") String username, @RequestBody String password) {
-			return accountService.updatePassword(username, password);
+		@RequestMapping(value = "pw/{username}/{pw}", method = RequestMethod.PUT)
+		public boolean updatePassword(@PathVariable(value = "username") String username, @PathVariable(value = "pw")  String pw) {
+			return accountService.updatePassword(username, pw);
 		}
 		//update avatar 
-		@RequestMapping(value = "/{username}/avatar/{avatar}", method = RequestMethod.PUT)
-		public boolean updateAvatar(@PathVariable(value = "username") String username, @RequestBody String avatar) {
+		@RequestMapping(value = "avatar/{username}/{avatar}", method = RequestMethod.PUT)
+		public boolean updateAvatar(@PathVariable(value = "username") String username, @PathVariable(value = "avatar")  String avatar) {
 			return accountService.updateAvatar(username, avatar);
 		}
 		//set admin
-		@RequestMapping(value = "/{username}/admin/{is_Admin}", method = RequestMethod.PUT)
-		public boolean setIsAdminr(@PathVariable(value = "username") String username, @RequestBody boolean admin) {
-			return accountService.setIsAdmin(username, admin);
+		@RequestMapping(value = "isAdmin/{username}/{isAdmin}", method = RequestMethod.PUT)
+		public boolean setIsAdminr(@PathVariable(value = "username") String username, @PathVariable(value = "isAdmin") boolean isAdmin) {
+			return accountService.setIsAdmin(username, isAdmin);
 		}
 		
 		//delete account (not done)
