@@ -1,8 +1,6 @@
 package com.java.uitbikes.service;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -10,11 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.Customer;
-import com.java.uitbikes.repository.AccountRepository;
-import com.java.uitbikes.repository.CartRepository;
-import com.java.uitbikes.repository.ChargeRequestRepository;
 import com.java.uitbikes.repository.CustomerRepository;
 
 @Service

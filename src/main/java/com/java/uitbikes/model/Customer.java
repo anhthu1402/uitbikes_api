@@ -6,15 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer")
@@ -55,7 +47,14 @@ public class Customer {
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
 	private List<Cart> carts = new ArrayList<Cart>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
+	private List<Invoice> invoices = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="customer")
+	private List<ChargeRequest> chargeRequests = new ArrayList<>();
 	
 	public Customer() {
 		// TODO Auto-generated constructor stub
@@ -146,5 +145,21 @@ public class Customer {
 	
 	public void removeCart(Cart cart) {
 		this.carts.remove(cart);
+	}
+	
+	public List<ChargeRequest> getChargeRequests() {
+		return chargeRequests;
+	}
+	
+	public void setChargeRequests(List<ChargeRequest> chargeRequests) {
+		this.chargeRequests = chargeRequests;
+	}
+	
+	public List<Invoice> getInvoices() {
+		return invoices;
+	}
+	
+	public void setInvoices(List<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 }

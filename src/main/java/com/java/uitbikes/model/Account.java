@@ -2,12 +2,8 @@ package com.java.uitbikes.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -35,9 +31,8 @@ public class Account {
 	@Column(name= "avatar")
 	private String avatar;
 	
-	public Account() {
-		// TODO Auto-generated constructor stub
-	}
+	public Account() {}
+	
 	public Account(String username, String password, String email, String avartar) {
 		this.username = username;
 		this.customer.setId(null);
@@ -86,7 +81,4 @@ public class Account {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
-
-
 }
