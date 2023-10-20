@@ -43,6 +43,12 @@ public class CartController {
 		return cartService.deleteCart(cart_id);
 	}
 	
+	// check product's already in customer's cart
+	@RequestMapping(value = "/customer/{customer_id}/product/{p_id}", method = RequestMethod.GET)
+	public Boolean checkProductInCart(@PathVariable(value = "customer_id") Long customer_id, @PathVariable(value = "p_id") Long p_id) {
+		return cartService.checkProductInCart(customer_id, p_id);
+	}
+	
 	// update quantity
 	@RequestMapping(value = "/{cart_id}/quantity/{quantity}", method = RequestMethod.PUT)
 	public Cart updateQuantity(@PathVariable(value = "cart_id") Long cart_id, @PathVariable(value = "quantity") Long quantity) {

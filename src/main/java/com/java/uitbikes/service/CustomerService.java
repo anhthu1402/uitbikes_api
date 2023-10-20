@@ -12,12 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.Customer;
-import com.java.uitbikes.model.Invoice;
 import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.repository.CartRepository;
 import com.java.uitbikes.repository.ChargeRequestRepository;
 import com.java.uitbikes.repository.CustomerRepository;
-import com.java.uitbikes.repository.InvoceRepository;
 
 @Service
 public class CustomerService {

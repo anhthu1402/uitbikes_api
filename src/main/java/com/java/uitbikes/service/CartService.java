@@ -36,6 +36,18 @@ public class CartService {
 		return cartRepository.save(c);
 	}
 	
+	// check if product's already in customer's cart
+	public Boolean checkProductInCart(Long customer_id, Long p_id) {
+		Customer customer = customerRepository.findById(customer_id).get();
+		List<Cart> carts = customer.getCarts();
+		for (Cart cart : carts) {
+			if(cart.getProduct().getId() == p_id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	// update quantity
 	public Cart updateQuantity(Long cart_id, Long quantity) {
 		Optional<Cart> cart = cartRepository.findById(cart_id);

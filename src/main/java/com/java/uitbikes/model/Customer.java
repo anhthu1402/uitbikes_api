@@ -12,7 +12,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -49,12 +48,14 @@ public class Customer {
 	@Column(name = "id_number")
 	private Long idNumber;
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
 	private Account account;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
 	private List<Cart> carts = new ArrayList<Cart>();
+	
 	
 	public Customer() {
 		// TODO Auto-generated constructor stub
