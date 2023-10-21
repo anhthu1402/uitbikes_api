@@ -155,6 +155,27 @@ public class ProductService {
 		}
 	}
 	
+	// get all products by type id (for admin)
+		public List<Product> getAllProductsByTypeId(Long type_id){
+			List<Product> products = getAllProducts();
+			List<Product> result = new ArrayList<Product>();
+			if(type_id == 0) {
+				return products;
+			}
+			else {
+				Optional<Type> type = typeRepository.findById(type_id);
+				if(type.isPresent()) {
+					for (Product productDto : products) {
+						if(productDto.getType().getId().equals(type_id)) {
+							result.add(productDto);
+						}
+					}
+					return result;
+				}
+				return null;
+			}
+		}
+	
 	// get all products detail by brand id 
 	public List<Product> getAllProductsDetailByBrandId(Long brand_id){
 		List<Product> products = getAllProductsDetail();

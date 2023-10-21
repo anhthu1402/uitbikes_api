@@ -63,6 +63,12 @@ public class ProductController {
 		return productService.getAllProductsDetailByTypeId(type_id);
 	}
 	
+	// get all products by type id (for admin)
+	@RequestMapping(value = "/type/{type_id}", method = RequestMethod.GET)
+	public List<Product> getAllProductsByTypeId(@PathVariable(value = "type_id") Long type_id){
+		return productService.getAllProductsByTypeId(type_id);
+	}
+	
 	// get all products detail by brand id 
 	@RequestMapping(value = "/details/brand/{brand_id}", method = RequestMethod.GET)
 	public List<Product> getAllProductsDetailByBrandId(@PathVariable(value = "brand_id") Long brand_id){
