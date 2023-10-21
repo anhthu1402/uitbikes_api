@@ -89,7 +89,7 @@ public class InvoiceService {
 	
 	//get total revenue
 	public Long getRevenue() {
-		List<Invoice> invoices = invoiceRepository.findByStatus(3);
+		List<Invoice> invoices = invoiceRepository.findByStatus(2);
         Long result = 0L;
         for (Invoice i: invoices) {
         	result += i.getTotal();
