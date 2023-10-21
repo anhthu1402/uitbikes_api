@@ -3,17 +3,14 @@ package com.java.uitbikes.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.java.uitbikes.dto.InvoiceDto;
 import com.java.uitbikes.model.Invoice;
 import com.java.uitbikes.service.InvoiceService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/invoices")
 public class InvoiceController {
 	@Autowired
@@ -37,10 +34,10 @@ public class InvoiceController {
         return invoiceService.getAllInvoices();
 	}
 	
-	//get all invoices by customer_id
-	@RequestMapping(value = "/customer/{customer_id}", method = RequestMethod.GET)
-	public List<InvoiceDto> getAllInvoicesByCustomerId(@PathVariable(value = "customer_id") Long customer_id) {
-		return invoiceService.getAllInvoicesByCustomerId(customer_id);
+	//get all invoices by customer_id and status
+	@RequestMapping(value = "/customer/{customer_id}/status/{status}", method = RequestMethod.GET)
+	public List<InvoiceDto> getAllInvoicesByCustomerIdAndStatus(@PathVariable(value = "customer_id") Long customer_id, @PathVariable(value = "status") int status) {
+		return invoiceService.getAllInvoicesByCustomerIdAndStatus(customer_id, status);
 	}
 	
 	//get number of completed orders

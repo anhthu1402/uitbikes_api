@@ -47,15 +47,24 @@ public class InvoiceService {
         return invoiceRepository.findAll();
 	}
 	
-	//get all invoices by customer_id
-	public List<InvoiceDto> getAllInvoicesByCustomerId(Long customer_id) {
+	//get all invoices by customer_id and status
+	public List<InvoiceDto> getAllInvoicesByCustomerIdAndStatus(Long customer_id, int status) {
 		Customer customer = customerRepository.findById(customer_id).get();
 		List<Invoice> invoices = customer.getInvoices();
-		List<InvoiceDto> result = new ArrayList<InvoiceDto>();
+		List<InvoiceDto> customerInvoices = new ArrayList<InvoiceDto>();
         for (Invoice i: invoices) {
         	InvoiceDto invoice = new InvoiceDto(i, customer_id);
-            result.add(invoice);
+        	customerInvoices.add(invoice);
         }
+        
+        List<InvoiceDto> result = new ArrayList<InvoiceDto>();
+        if (status == -1)
+        	result = customerInvoices;
+        else {
+			for (InvoiceDto i: customerInvoices)
+				if (i.getStatus() == status)
+					result.add(i);
+		}
         
         return result;
 	}
@@ -89,6 +98,7 @@ public class InvoiceService {
 	}
 	
 	//get revenue within the last 12 months
+	
 	
 	//update invoice status
 	public Invoice updateInvoice(Long id, int status) {
