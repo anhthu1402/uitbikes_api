@@ -11,7 +11,7 @@ public class ChargeRequest {
 	@Column(name = "id")
 	private Long id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
 	private Customer customer;
 
