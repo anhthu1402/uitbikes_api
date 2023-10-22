@@ -15,7 +15,7 @@ import com.java.uitbikes.model.Product;
 import com.java.uitbikes.service.ProductService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping(value = "/api/products")
 public class ProductController {
 	@Autowired 

@@ -106,6 +106,11 @@ public class InvoiceService {
 		if(request.isPresent()) {
 			Invoice req = request.get();
 			req.setStatus(status);
+			if (status == 3) {
+				Customer cus = customerRepository.findById(req.getCustomer().getId()).get();
+				cus.setBalance(cus.getBalance()+req.getTotal());
+				customerRepository.save(cus);
+			}
 			return invoiceRepository.save(req);
 		}
 		return request.get();
