@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.java.uitbikes.dto.ProductDto;
 import com.java.uitbikes.model.Product;
+import com.java.uitbikes.repository.AccountRepository;
+import com.java.uitbikes.repository.ProductRepository;
 import com.java.uitbikes.service.ProductService;
 
 @RestController
@@ -20,6 +22,14 @@ import com.java.uitbikes.service.ProductService;
 public class ProductController {
 	@Autowired 
 	ProductService productService;
+	
+	@Autowired
+	ProductRepository productRepository;
+	
+	@RequestMapping(value = "/countproduct", method = RequestMethod.GET)
+	public Long countProduct() {
+		return productRepository.count();
+	}
 	
 	// create product
 	@RequestMapping(value = "", method = RequestMethod.POST)

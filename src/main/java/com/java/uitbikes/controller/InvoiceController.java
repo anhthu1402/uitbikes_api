@@ -1,6 +1,7 @@
 package com.java.uitbikes.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import com.java.uitbikes.dto.InvoiceDto;
 import com.java.uitbikes.dto.RevenueMonths;
 import com.java.uitbikes.model.Invoice;
+import com.java.uitbikes.model.InvoiceDetail;
+import com.java.uitbikes.model.Product;
+import com.java.uitbikes.model.Type;
+import com.java.uitbikes.repository.AccountRepository;
+import com.java.uitbikes.repository.InvoiceRepository;
 import com.java.uitbikes.service.InvoiceService;
 
 @RestController
@@ -16,6 +22,14 @@ import com.java.uitbikes.service.InvoiceService;
 public class InvoiceController {
 	@Autowired
 	InvoiceService invoiceService;
+	
+	@Autowired
+	InvoiceRepository invoiceRepository;
+	
+	@RequestMapping(value = "/countinvoice", method = RequestMethod.GET)
+	public Long countInvoice() {
+		return invoiceRepository.count();
+	}
 	
 	//create invoice
 	@RequestMapping(value = "", method = RequestMethod.POST)
@@ -66,9 +80,33 @@ public class InvoiceController {
 	}
 	
 	//get revenue within the last 12 months
-	@RequestMapping(value = "/revenue/revenuebymonth", method = RequestMethod.GET)
+	@RequestMapping(value = "/revenuebymonth", method = RequestMethod.GET)
 	public RevenueMonths getRevenueByMonth() {
 		return invoiceService.getRevenueByMonth();
+	}
+	
+	//get best selling product
+	@RequestMapping(value = "/bestsell/product", method = RequestMethod.GET)
+	public List<InvoiceDetail> getBestSellingProduct() {
+		return invoiceService.getBestSellingProduct();
+	}
+	
+	//get best selling type
+	@RequestMapping(value = "/bestsell/type", method = RequestMethod.GET)
+	public List<Object> getBestSellingType() {
+		return invoiceService.getBestSellingType();
+	}
+	
+	//get best selling brand
+	@RequestMapping(value = "/bestsell/brand", method = RequestMethod.GET)
+	public Object getBestSellingBrand() {
+		return invoiceService.getBestSellingBrand();
+	}
+	
+	//count Customer purchased today
+	@RequestMapping(value = "/rates/customerpurchasedtoday", method = RequestMethod.GET)
+	public double getCustomerPurchasedTodayRates() {
+		return invoiceService.getCustomerPurchasedTodayRates();
 	}
 	
 	//update invoice status

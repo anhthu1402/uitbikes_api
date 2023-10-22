@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.model.Account;
+import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.service.AccountService;
 import com.java.uitbikes.service.CustomerService;
 
@@ -25,6 +26,15 @@ public class AccountController {
 	
 	@Autowired 
 	CustomerService customerService;
+	
+	@Autowired
+	AccountRepository accountRepository;
+	
+	@RequestMapping(value = "/countaccount", method = RequestMethod.GET)
+	public Long countAccount() {
+		return accountRepository.count();
+	}
+	
 	
 	 //create account 
 		@RequestMapping(value = "", method = RequestMethod.POST)

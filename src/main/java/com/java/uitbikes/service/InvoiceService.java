@@ -2,11 +2,8 @@ package com.java.uitbikes.service;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,15 @@ public class InvoiceService {
 	
 	@Autowired
 	CustomerRepository customerRepository;
+	
+	@Autowired
+	InvoiceDetailRepository detailRepository;
+	
+	@Autowired
+	TypeRepository typeRepository;
+	
+	@Autowired
+	BrandRepository brandRepository;
 	
 	//create invoice
 	public Invoice createInvoice(Invoice invoice) {
@@ -125,6 +131,46 @@ public class InvoiceService {
 		}
 		
 		return new RevenueMonths(allDates, allRevenues);
+	}
+	
+//	public Product getBestSellingProduct() {
+//		List<Invoice> invoices = invoiceRepository.findByStatus(2);
+//		List<InvoiceDetail> products = new ArrayList<InvoiceDetail>();
+//		
+//		for (Invoice i: invoices) {
+//			for (InvoiceDetail iDetail: i.getDetails()) {
+//				products.add(iDetail);
+//			}
+//		}
+//		
+//		Map<Product, Integer> productQuantityMap = products.stream().collect(Collectors.toMap(InvoiceDetail::getProduct, 
+//								InvoiceDetail::getQuantity,
+//				                Integer::sum));
+//		
+//		Product result = Collections.max(productQuantityMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+//
+//				//products.stream().max(Comparator.comparing(InvoiceDetail::getQuantity));
+//		return result;
+//		
+//	}
+	
+	public List<InvoiceDetail> getBestSellingProduct() {
+		return detailRepository.findBestSellProduct();
+	}
+	
+	//get best selling type
+	public List<Object> getBestSellingType() {
+		return typeRepository.findBestSellType();
+	}
+	
+	//get best selling brand
+	public Object getBestSellingBrand() {
+		return brandRepository.findBestSellBrand();
+	}
+	
+	//count Customer purchased today
+	public double getCustomerPurchasedTodayRates() {
+		return invoiceRepository.countCustomerPurchasedToday() / customerRepository.count() * 100;
 	}
 	
 	//update invoice status
