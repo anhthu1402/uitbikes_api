@@ -56,9 +56,7 @@ public class Customer {
 	@OneToMany(mappedBy="customer")
 	private List<ChargeRequest> chargeRequests = new ArrayList<>();
 	
-	public Customer() {
-		// TODO Auto-generated constructor stub
-	}
+	public Customer() {}
 	
 	public Long getId() {
 		return id;

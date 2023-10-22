@@ -9,6 +9,7 @@ import com.java.uitbikes.model.ChargeRequest;
 import com.java.uitbikes.service.ChargeRequestService;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/requests")
 public class ChargeRequestController {
 	@Autowired

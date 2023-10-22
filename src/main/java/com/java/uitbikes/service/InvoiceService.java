@@ -1,7 +1,9 @@
 package com.java.uitbikes.service;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -98,7 +100,32 @@ public class InvoiceService {
 	}
 	
 	//get revenue within the last 12 months
-	
+	public RevenueMonths getRevenueByMonth() {
+		List<Invoice> allInvoices = invoiceRepository.findByStatus(2);
+		
+		List<String> allDates = new ArrayList<String>();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, 1);
+		SimpleDateFormat month_date = new SimpleDateFormat("MMM-yyyy");
+		
+		List<Long> allRevenues = new ArrayList<Long>();
+		
+		for (int i = 12; i > 0; i--) {
+		    cal.add(Calendar.MONTH, -1);
+		    String month_name = month_date.format(cal.getTime());
+		    allDates.add(month_name);
+		    
+		    Long revenue = 0L;
+		    for (Invoice in: allInvoices) {
+		    	if (month_date.format(new Date(in.getDate().getTime())).equals(month_name)) {
+		    		revenue += in.getTotal();
+		    	}
+		    }
+		    allRevenues.add(revenue);
+		}
+		
+		return new RevenueMonths(allDates, allRevenues);
+	}
 	
 	//update invoice status
 	public Invoice updateInvoice(Long id, int status) {

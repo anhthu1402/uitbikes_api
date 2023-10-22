@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.java.uitbikes.dto.InvoiceDto;
+import com.java.uitbikes.dto.RevenueMonths;
 import com.java.uitbikes.model.Invoice;
 import com.java.uitbikes.service.InvoiceService;
 
@@ -65,6 +66,10 @@ public class InvoiceController {
 	}
 	
 	//get revenue within the last 12 months
+	@RequestMapping(value = "/revenue/revenuebymonth", method = RequestMethod.GET)
+	public RevenueMonths getRevenueByMonth() {
+		return invoiceService.getRevenueByMonth();
+	}
 	
 	//update invoice status
 	@RequestMapping(value = "/{invoice_id}/status/{status}", method = RequestMethod.PUT)
