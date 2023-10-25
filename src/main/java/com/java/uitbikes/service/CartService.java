@@ -37,15 +37,15 @@ public class CartService {
 	}
 	
 	// check if product's already in customer's cart
-	public Boolean checkProductInCart(Long customer_id, Long p_id) {
+	public Cart checkProductInCart(Long customer_id, Long p_id) {
 		Customer customer = customerRepository.findById(customer_id).get();
 		List<Cart> carts = customer.getCarts();
 		for (Cart cart : carts) {
 			if(cart.getProduct().getId() == p_id) {
-				return true;
+				return cart;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	// update quantity
