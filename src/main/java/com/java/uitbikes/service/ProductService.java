@@ -77,7 +77,7 @@ public class ProductService {
 		List<Product> products = getAllProducts();
 		for (Product product : products) {
 			if(product.getName().equals(name)){
-				if(product.getIsActive()==1) {
+				if(product.getIsActive() == (long)1) {
 					return product;
 				}
 			}
@@ -119,8 +119,11 @@ public class ProductService {
 	// get product detail by name
 	public ProductDto getProductDetailByName(String name) {
 		Product product = getFirstProductByName(name);
-		List<ProductDetailDto> productsDetail = getProductDetail(name);
-		return new ProductDto(product, productsDetail);
+		if(product != null) {
+			List<ProductDetailDto> productsDetail = getProductDetail(name);
+			return new ProductDto(product, productsDetail);
+		}
+		return null;
 	}
 	
 	// get all products detail (to display in page Home)
@@ -129,7 +132,9 @@ public class ProductService {
 		List<String> listNames = getAllProductsNames();
 		for (String name : listNames) {
 			Product product = getFirstProductByName(name);
-			result.add(product);
+			if(product!=null) {
+				result.add(product);
+			}
 		}
 		return result;
 	}
