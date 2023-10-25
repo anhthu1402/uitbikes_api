@@ -87,13 +87,13 @@ public class InvoiceController {
 	
 	//get best selling product
 	@RequestMapping(value = "/bestsell/product", method = RequestMethod.GET)
-	public List<InvoiceDetail> getBestSellingProduct() {
+	public InvoiceDetail getBestSellingProduct() {
 		return invoiceService.getBestSellingProduct();
 	}
 	
 	//get best selling type
 	@RequestMapping(value = "/bestsell/type", method = RequestMethod.GET)
-	public List<Object> getBestSellingType() {
+	public Object getBestSellingType() {
 		return invoiceService.getBestSellingType();
 	}
 	

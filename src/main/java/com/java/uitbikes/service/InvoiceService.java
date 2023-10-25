@@ -133,33 +133,12 @@ public class InvoiceService {
 		return new RevenueMonths(allDates, allRevenues);
 	}
 	
-//	public Product getBestSellingProduct() {
-//		List<Invoice> invoices = invoiceRepository.findByStatus(2);
-//		List<InvoiceDetail> products = new ArrayList<InvoiceDetail>();
-//		
-//		for (Invoice i: invoices) {
-//			for (InvoiceDetail iDetail: i.getDetails()) {
-//				products.add(iDetail);
-//			}
-//		}
-//		
-//		Map<Product, Integer> productQuantityMap = products.stream().collect(Collectors.toMap(InvoiceDetail::getProduct, 
-//								InvoiceDetail::getQuantity,
-//				                Integer::sum));
-//		
-//		Product result = Collections.max(productQuantityMap.entrySet(), Map.Entry.comparingByValue()).getKey();
-//
-//				//products.stream().max(Comparator.comparing(InvoiceDetail::getQuantity));
-//		return result;
-//		
-//	}
-	
-	public List<InvoiceDetail> getBestSellingProduct() {
+	public InvoiceDetail getBestSellingProduct() {
 		return detailRepository.findBestSellProduct();
 	}
 	
 	//get best selling type
-	public List<Object> getBestSellingType() {
+	public Object getBestSellingType() {
 		return typeRepository.findBestSellType();
 	}
 	

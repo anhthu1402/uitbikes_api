@@ -14,9 +14,8 @@ import com.java.uitbikes.model.Customer;
 //import com.java.uitbikes.repository.CustomerRepository;
 import com.java.uitbikes.service.CustomerService;
 
-
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping(value = "/api/customers")
 
 public class CustomerController {
@@ -24,34 +23,28 @@ public class CustomerController {
 	CustomerService customerService;
 	
 	// create customer
-		@RequestMapping(value = "", method = RequestMethod.POST)
-		public Customer createCustomer() {
-			return customerService.createCustomer();
-		}
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public Customer createCustomer() {
+		return customerService.createCustomer();
+	}
 	// get all customers (for in admin)
-		@RequestMapping(value = "", method = RequestMethod.GET)
-		public List<Customer> getAllCustomers(){
-			return customerService.getAllCustomers();
-		}
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public List<Customer> getAllCustomers(){
+		return customerService.getAllCustomers();
+	}
 	
 	// get customer by id
-		@RequestMapping(value = "/{customer_id}", method = RequestMethod.GET)
-		public Customer getCustomerById(@PathVariable(value = "customer_id") Long customer_id) {
-			return customerService.getCustomerById(customer_id);
-		}
+	@RequestMapping(value = "/{customer_id}", method = RequestMethod.GET)
+	public Customer getCustomerById(@PathVariable(value = "customer_id") Long customer_id) {
+		return customerService.getCustomerById(customer_id);
+	}
 	
 	//update customer
 	//not done
-		@RequestMapping(value = "/{customer_id}", method = RequestMethod.PUT)
-		public Customer updateCustomer(@PathVariable(value = "customer_id") Long customer_id, @RequestBody Customer customerDetail) {
-			return customerService.updateCustomer(customer_id, customerDetail);
-		}
-		
-	//	delete customer
-//		@RequestMapping(value = "/{customer_id}", method = RequestMethod.DELETE)
-//		public void deleteCustomer(@PathVariable(value = "customer_id") Long customer_id) {
-//			customerService.deleteCustomer(customer_id);
-//		}
+	@RequestMapping(value = "/{customer_id}", method = RequestMethod.PUT)
+	public Customer updateCustomer(@PathVariable(value = "customer_id") Long customer_id, @RequestBody Customer customerDetail) {
+		return customerService.updateCustomer(customer_id, customerDetail);
+	}
 	
 }
 

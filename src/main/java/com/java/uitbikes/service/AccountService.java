@@ -42,10 +42,25 @@ public class AccountService {
 		return result;
 	}
 	
+	// get accounts by username or email
+	public AccountDto getAccountsByNameOrEmail(String identity){
+		Optional<Account> account = accountRepository.findByUsername(identity);
+		if (account.isPresent()) 
+			return new AccountDto(account.get());
+		else {
+			account = accountRepository.findByEmail(identity);
+			if (account.isPresent()) 
+				return new AccountDto(account.get());
+		}
+		return null;
+	}
+	
 	// get accounts by username
-	public AccountDto getListAccountsByName(String username){
-		Account account = accountRepository.findByUsername(username).get();
-		return new AccountDto(account);
+	public AccountDto getAccountsByEmail(String email){
+		Optional<Account> account = accountRepository.findByEmail(email);
+		if (account.isPresent()) 
+			return new AccountDto(account.get());
+		return null;
 	}
 	
 	//get list account of admin
@@ -61,21 +76,18 @@ public class AccountService {
 	}
 	
 	//sign in by password and username
-	public AccountDto signinAccount(String username, String password) {
-		List<Account> accounts = accountRepository.findAll();
-		for (Account account : accounts) {
-			if(account.getUsername().equals(username)) {
-				if(account.getPw().equals(password)) {
-					return new AccountDto(account);
-				}
-			}
+	public AccountDto signinAccount(String email, String password) {
+		Optional<Account> account = accountRepository.findByEmail(email);
+		if (account.isPresent()) {
+			if (account.get().getPw().equals(password))
+				return new AccountDto(account.get());
 		}
 		return null;
 	}
 	
 	//sign in for admin
-	public Account getIsAccountAdmin(String username, String password) {
-		Optional<Account> account = accountRepository.findByUsername(username);
+	public Account getIsAccountAdmin(String email, String password) {
+		Optional<Account> account = accountRepository.findByEmail(email);
 		if(account.isPresent()) {
 			Account a = account.get();
 			if(a.getIsAdmin() == true) {
