@@ -47,7 +47,7 @@ public class CartController {
 	
 	// check product's already in customer's cart
 	@RequestMapping(value = "/customer/{customer_id}/product/{p_id}", method = RequestMethod.GET)
-	public Boolean checkProductInCart(@PathVariable(value = "customer_id") Long customer_id, @PathVariable(value = "p_id") Long p_id) {
+	public Cart checkProductInCart(@PathVariable(value = "customer_id") Long customer_id, @PathVariable(value = "p_id") Long p_id) {
 		return cartService.checkProductInCart(customer_id, p_id);
 	}
 	
