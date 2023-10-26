@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.model.Account;
+import com.java.uitbikes.model.LoginForm;
 import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.service.AccountService;
 import com.java.uitbikes.service.CustomerService;
@@ -41,6 +42,18 @@ public class AccountController {
 		return accountService.createAccount(a);
 	}
 	
+	// check if username is already used
+	@RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
+	public Boolean checkUsername(@PathVariable(value = "username") String username) {
+		return accountService.checkUsername(username);
+	}
+	
+	// check if email is already used
+	@RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
+	public Boolean checkEmail(@PathVariable(value = "email") String email) {
+		return accountService.checkEmail(email);
+	}
+	
 	// get all accounts (for in admin)
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<AccountDto> getAllAccounts(){ 
@@ -57,37 +70,30 @@ public class AccountController {
 	public List<AccountDto> getListAccountAdmin(){
 		return accountService.getListAccountAdmin();
 	}
-
-	//	 admin/user 
-	@RequestMapping(value = "/username/{username}/{pw}", method = RequestMethod.GET)
-	public Account getIsAccountAdmin(@PathVariable(value = "username") String username, @PathVariable(value = "pw") String password){
-		return accountService.getIsAccountAdmin(username, password);
-	}
 	
-	// signin account by password,email
-	@RequestMapping(value = "/{email}/pw/{pw}", method = RequestMethod.GET)
-	public AccountDto signinAccount(@PathVariable(value = "email") String email, @PathVariable(value = "pw") String password) {
-		return accountService.signinAccount(email, password);
+	// sign in account by password,email
+	@RequestMapping(value = "/signin", method = RequestMethod.GET)
+	public AccountDto signinAccount(@RequestBody LoginForm loginForm) {
+		return accountService.signinAccount(loginForm);
 	}
-//	//sign in for admin
-//		@RequestMapping(value = "/username/{username}/password/{password}/isAdmin", method = RequestMethod.GET)
-//		public Account getIsAccountAdmin(@PathVariable(value = "username") String username, @RequestBody String password) {
-//			return accountService.getIsAccountAdmin(username, password);
-//		}	
-//		
+	//sign in for admin
+	@RequestMapping(value = "/signin/admin", method = RequestMethod.GET)
+	public AccountDto getIsAccountAdmin(@RequestBody LoginForm loginForm) {
+		return accountService.signinAdmin(loginForm);
+	}	
 		
 	//update password 
-	@RequestMapping(value = "pw/{username}/{pw}", method = RequestMethod.PUT)
-	public boolean updatePassword(@PathVariable(value = "username") String username, @PathVariable(value = "pw")  String pw) {
-		return accountService.updatePassword(username, pw);
+	@RequestMapping(value = "/password", method = RequestMethod.PUT)
+	public boolean updatePassword(@RequestBody LoginForm updateForm) {
+		return accountService.updatePassword(updateForm);
 	}
 	//update avatar 
-	@RequestMapping(value = "avatar/{username}/{avatar}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{username}/avatar/{avatar}", method = RequestMethod.PUT)
 	public boolean updateAvatar(@PathVariable(value = "username") String username, @PathVariable(value = "avatar")  String avatar) {
 		return accountService.updateAvatar(username, avatar);
 	}
 	//set admin
-	@RequestMapping(value = "isAdmin/{username}/{isAdmin}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{username}/isAdmin/{isAdmin}", method = RequestMethod.PUT)
 	public boolean setIsAdminr(@PathVariable(value = "username") String username, @PathVariable(value = "isAdmin") boolean isAdmin) {
 		return accountService.setIsAdmin(username, isAdmin);
 	}

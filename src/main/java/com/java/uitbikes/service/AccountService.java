@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.Customer;
+import com.java.uitbikes.model.LoginForm;
 import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.repository.CustomerRepository;
 
@@ -30,6 +31,28 @@ public class AccountService {
 		Account account = accountRepository.save(a);
 		account.setCustomer(customer);
 		return  accountRepository.save(account);
+	}
+	
+	// check if username is already used
+	public Boolean checkUsername(String username) {
+		List<Account> list = accountRepository.findAll();
+		for (Account account : list) {
+			if(account.getUsername().equals(username)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// check if email is already used
+	public Boolean checkEmail(String email) {
+		List<Account> list = accountRepository.findAll();
+		for (Account account : list) {
+			if(account.getEmail().equals(email)) {
+				return true;
+			}
+		}
+		return false;
 	}
 		
 	// get all accounts (for read in admin)
@@ -55,7 +78,7 @@ public class AccountService {
 		return null;
 	}
 	
-	// get accounts by username
+	// get accounts by email
 	public AccountDto getAccountsByEmail(String email){
 		Optional<Account> account = accountRepository.findByEmail(email);
 		if (account.isPresent()) 
@@ -75,36 +98,36 @@ public class AccountService {
 		return result;
 	}
 	
-	//sign in by password and username
-	public AccountDto signinAccount(String email, String password) {
-		Optional<Account> account = accountRepository.findByEmail(email);
+	//sign in by password and email
+	public AccountDto signinAccount(LoginForm loginForm) {
+		Optional<Account> account = accountRepository.findByEmail(loginForm.getEmail());
 		if (account.isPresent()) {
-			if (account.get().getPw().equals(password))
+			if (account.get().getPw().equals(loginForm.getPw()))
 				return new AccountDto(account.get());
 		}
 		return null;
 	}
 	
 	//sign in for admin
-	public Account getIsAccountAdmin(String email, String password) {
-		Optional<Account> account = accountRepository.findByEmail(email);
+	public AccountDto signinAdmin(LoginForm loginForm) {
+		Optional<Account> account = accountRepository.findByEmail(loginForm.getEmail());
 		if(account.isPresent()) {
 			Account a = account.get();
 			if(a.getIsAdmin() == true) {
-				if (a.getPw().equals(password)) {
-					return a;
+				if (a.getPw().equals(loginForm.getPw())) {
+					return new AccountDto(a);
 				}
 			}
 		}
 		return null;
 	}
 	
-	//update password	
-	public boolean updatePassword(String username, String password) {
-		Optional<Account> account = accountRepository.findByUsername(username);
+	//update password by email
+	public boolean updatePassword(LoginForm updateForm) {
+		Optional<Account> account = accountRepository.findByEmail(updateForm.getEmail());
 		if(account.isPresent()) {
 			Account a = account.get();
-			a.setPw(password);
+			a.setPw(updateForm.getPw());
 			accountRepository.save(a);
 			return true;
 		}
