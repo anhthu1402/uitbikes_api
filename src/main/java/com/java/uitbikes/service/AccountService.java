@@ -26,11 +26,12 @@ public class AccountService {
 	CustomerService customerService;
 	
 	// create account
-	public Account createAccount(Account a) {
+	public AccountDto createAccount(Account a) {
 		Customer customer = customerService.createCustomer();
 		Account account = accountRepository.save(a);
 		account.setCustomer(customer);
-		return  accountRepository.save(account);
+		accountRepository.save(account);
+		return new AccountDto(account);
 	}
 	
 	// check if username is already used
