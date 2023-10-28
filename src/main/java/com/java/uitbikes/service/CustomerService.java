@@ -1,4 +1,5 @@
 package com.java.uitbikes.service;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -18,8 +19,7 @@ public class CustomerService {
 	
 	//create customer
 		public Customer createCustomer() {
-			LocalDate localDate = LocalDate.now();
-			Date registerDate=Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());			
+			Date registerDate= Date.from(Instant.now());			
 			Customer customer = customerRepository.save(new Customer());
 			customer.setRegisterDate(registerDate);
 			return customerRepository.save(customer);
