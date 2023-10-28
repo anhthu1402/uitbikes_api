@@ -52,7 +52,6 @@ public class CustomerService {
 				c.setGender(customerDetail.getGender());
 				c.setBalance(customerDetail.getBalance());
 				c.setIdNumber(customerDetail.getIdNumber());
-				c.setRegisterDate(customerDetail.getRegisterDate());
 				return customerRepository.save(c);
 			}
 			return customerRepository.save(customerDetail);

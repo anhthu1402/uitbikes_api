@@ -72,12 +72,12 @@ public class AccountController {
 	}
 	
 	// sign in account by password,email
-	@RequestMapping(value = "/signin", method = RequestMethod.GET)
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public AccountDto signinAccount(@RequestBody LoginForm loginForm) {
 		return accountService.signinAccount(loginForm);
 	}
 	//sign in for admin
-	@RequestMapping(value = "/signin/admin", method = RequestMethod.GET)
+	@RequestMapping(value = "/signin/admin", method = RequestMethod.POST)
 	public AccountDto getIsAccountAdmin(@RequestBody LoginForm loginForm) {
 		return accountService.signinAdmin(loginForm);
 	}	
