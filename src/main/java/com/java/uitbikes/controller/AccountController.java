@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.java.uitbikes.dto.AccountDto;
+import com.java.uitbikes.dto.AvatarDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.LoginForm;
 import com.java.uitbikes.repository.AccountRepository;
@@ -88,8 +89,8 @@ public class AccountController {
 		return accountService.updatePassword(updateForm);
 	}
 	//update avatar 
-	@RequestMapping(value = "/{username}/avatar/{avatar}", method = RequestMethod.PUT)
-	public boolean updateAvatar(@PathVariable(value = "username") String username, @PathVariable(value = "avatar")  String avatar) {
+	@RequestMapping(value = "/{username}/avatar", method = RequestMethod.PUT)
+	public boolean updateAvatar(@PathVariable(value = "username") String username, @RequestBody AvatarDto avatar) {
 		return accountService.updateAvatar(username, avatar);
 	}
 	//set admin

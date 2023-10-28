@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.java.uitbikes.dto.AccountDto;
+import com.java.uitbikes.dto.AvatarDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.Customer;
 import com.java.uitbikes.model.LoginForm;
@@ -136,11 +137,11 @@ public class AccountService {
 	}
 	
 	//update avatar
-	public boolean updateAvatar(String username, String avatar) {
+	public boolean updateAvatar(String username, AvatarDto avatar) {
 		Optional<Account> account = accountRepository.findByUsername(username);
 		if(account.isPresent()) {
 			Account a = account.get();
-			a.setAvatar(avatar);
+			a.setAvatar(avatar.getAvatar());
 			accountRepository.save(a);
 			return true;
 		}
