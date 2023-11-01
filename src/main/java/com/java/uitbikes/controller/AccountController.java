@@ -79,7 +79,7 @@ public class AccountController {
 	}
 	//sign in for admin
 	@RequestMapping(value = "/signin/admin", method = RequestMethod.POST)
-	public AccountDto getIsAccountAdmin(@RequestBody LoginForm loginForm) {
+	public AccountDto signinAdmin(@RequestBody LoginForm loginForm) {
 		return accountService.signinAdmin(loginForm);
 	}	
 		
