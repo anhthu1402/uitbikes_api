@@ -51,8 +51,8 @@ public class Product {
 	private Brand brand = new Brand();
 	
 	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private Cart cart;
+	@OneToMany(mappedBy = "product")
+	private List<Cart> cart = new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
@@ -158,12 +158,20 @@ public class Product {
 		this.brand = brand;
 	}
 
-	public Cart getCart() {
+	public List<Cart> getCart() {
 		return cart;
 	}
 
-	public void setCart(Cart cart) {
+	public void setCart(List<Cart> cart) {
 		this.cart = cart;
+	}
+
+	public List<InvoiceDetail> getInvoiceDetails() {
+		return invoiceDetails;
+	}
+
+	public void setInvoiceDetails(List<InvoiceDetail> invoiceDetails) {
+		this.invoiceDetails = invoiceDetails;
 	}
 	
 }

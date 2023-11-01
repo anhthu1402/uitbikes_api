@@ -18,7 +18,7 @@ public class Cart {
 	@Column(name = "cart_id")
 	private Long id;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "p_id", referencedColumnName = "p_id")
 	private Product product;
 	
