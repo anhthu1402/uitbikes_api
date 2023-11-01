@@ -87,7 +87,10 @@ public class CartService {
 	public Boolean deleteCart(Long cart_id) {
 		Optional<Cart> cart = cartRepository.findById(cart_id);
 		if(cart.isPresent()) {
-			cartRepository.delete(cart.get());
+			Cart c = cart.get();
+			c.setProduct(null);
+			c.setCustomer(null);
+			cartRepository.delete(c);
 			return true;
 		}
 		return false;
