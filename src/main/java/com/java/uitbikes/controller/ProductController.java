@@ -120,4 +120,22 @@ public class ProductController {
 	public Product updateProduct(@PathVariable(value = "id") Long id, @RequestBody Product p) {
 		return productService.updateProduct(id, p);
 	}
+	
+	// get range of cc
+	@RequestMapping(value = "/cc", method = RequestMethod.GET)
+	public List<Long> getRangeOfCc(){
+		return productService.getRangeOfCc();
+	}
+	
+	// get range of date_manu
+	@RequestMapping(value = "/date", method = RequestMethod.GET)
+	public List<Long> getRangeOfDateManu(){
+		return productService.getRangeOfDateManu();
+	}
+	
+	// get range of price
+	@RequestMapping(value = "/price", method = RequestMethod.GET)
+	public List<Long> getRangeOfPrice(){
+		return productService.getRangeOfPrice();
+	}
 }
