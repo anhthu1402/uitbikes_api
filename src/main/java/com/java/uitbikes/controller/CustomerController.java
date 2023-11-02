@@ -34,17 +34,20 @@ public class CustomerController {
 	}
 	
 	// get customer by id
-	@RequestMapping(value = "/{customer_id}", method = RequestMethod.GET)
-	public Customer getCustomerById(@PathVariable(value = "customer_id") Long customer_id) {
-		return customerService.getCustomerById(customer_id);
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public Customer getCustomerById(@PathVariable(value = "id") Long id) {
+		return customerService.getCustomerById(id);
 	}
 	
 	//update customer
-	//not done
-	@RequestMapping(value = "/{customer_id}", method = RequestMethod.PUT)
-	public Customer updateCustomer(@PathVariable(value = "customer_id") Long customer_id, @RequestBody Customer customerDetail) {
-		return customerService.updateCustomer(customer_id, customerDetail);
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customerDetail) {
+		return customerService.updateCustomer(id, customerDetail);
 	}
-	
+	//update balance
+	@RequestMapping(value = "/{id}/balance/{balance}", method = RequestMethod.PUT)
+	public Customer updateBalance(@PathVariable(value = "id") Long id, @PathVariable(value = "balance") Long balance) {
+		return customerService.updateBalance(id, balance);
+	}
 }
 

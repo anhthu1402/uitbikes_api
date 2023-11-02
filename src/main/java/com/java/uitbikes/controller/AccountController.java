@@ -96,7 +96,7 @@ public class AccountController {
 	}
 	//set admin
 	@RequestMapping(value = "/{username}/isAdmin/{isAdmin}", method = RequestMethod.PUT)
-	public AccountDto setIsAdmin(@PathVariable(value = "username") String username, @PathVariable(value = "isAdmin") boolean isAdmin) {
+	public boolean setIsAdmin(@PathVariable(value = "username") String username, @PathVariable(value = "isAdmin") boolean isAdmin) {
 		return accountService.setIsAdmin(username, isAdmin);
 	}
 	
