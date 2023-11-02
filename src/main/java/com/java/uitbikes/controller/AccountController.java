@@ -95,7 +95,7 @@ public class AccountController {
 		return accountService.updateAvatar(username, avatar);
 	}
 	//set admin
-	@RequestMapping(value = "{username}/isAdmin/{isAdmin}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{username}/isAdmin/{isAdmin}", method = RequestMethod.PUT)
 	public AccountDto setIsAdmin(@PathVariable(value = "username") String username, @PathVariable(value = "isAdmin") boolean isAdmin) {
 		return accountService.setIsAdmin(username, isAdmin);
 	}
