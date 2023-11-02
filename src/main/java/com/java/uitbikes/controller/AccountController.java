@@ -14,6 +14,7 @@ import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.dto.AvatarDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.LoginForm;
+import com.java.uitbikes.model.Product;
 import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.service.AccountService;
 import com.java.uitbikes.service.CustomerService;
@@ -94,9 +95,22 @@ public class AccountController {
 		return accountService.updateAvatar(username, avatar);
 	}
 	//set admin
-	@RequestMapping(value = "/{username}/isAdmin/{isAdmin}", method = RequestMethod.PUT)
-	public boolean setIsAdminr(@PathVariable(value = "username") String username, @PathVariable(value = "isAdmin") boolean isAdmin) {
+	@RequestMapping(value = "{username}/isAdmin/{isAdmin}", method = RequestMethod.PUT)
+	public AccountDto setIsAdmin(@PathVariable(value = "username") String username, @PathVariable(value = "isAdmin") boolean isAdmin) {
 		return accountService.setIsAdmin(username, isAdmin);
 	}
+	
+	//check password
+	@RequestMapping(value = "/password", method = RequestMethod.GET)
+	public boolean checkPassword(@RequestBody LoginForm loginForm) {
+		return accountService.checkPassword(loginForm);
+	}
+	
+	//Update account
+	@RequestMapping(value = "/{username}", method = RequestMethod.PUT)
+	public Account updateAccount(@PathVariable(value = "username") String username, @RequestBody Account a) {
+		return accountService.updateAccount(username, a);
+	}
+	
 }
 

@@ -12,6 +12,8 @@ import com.java.uitbikes.dto.AvatarDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.Customer;
 import com.java.uitbikes.model.LoginForm;
+import com.java.uitbikes.model.Product;
+import com.java.uitbikes.model.Type;
 import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.repository.CustomerRepository;
 
@@ -149,14 +151,40 @@ public class AccountService {
 	}
 	
 	//set admin
-	public boolean setIsAdmin(String username, boolean admin) {
+	public AccountDto setIsAdmin(String username, boolean isAdmin) {
 		Optional<Account> account = accountRepository.findByUsername(username);
 		if(account.isPresent()) {
+//			Account a = account.get();
+			account.get().setIsAdmin(isAdmin);
+			accountRepository.save(account.get());
+			return new AccountDto(account.get());
+		}
+		return null;
+	}
+	
+	//check password
+	public boolean checkPassword(LoginForm loginForm) {
+		Optional<Account> account = accountRepository.findByEmail(loginForm.getEmail());
+		if(account.isPresent()) {
 			Account a = account.get();
-			a.setIsAdmin(admin);;
-			accountRepository.save(a);
-			return true;
+			if (a.getPw().equals(loginForm.getPw())) {
+				return true;
+			}
 		}
 		return false;
 	}
+	
+	//Update account
+	public Account updateAccount(String username, Account accountDetail) {
+		Optional<Account> account = accountRepository.findByUsername(username);
+		if(account.isPresent()) {
+			Account a = account.get();
+			a.setCustomer(customerService.updateCustomer(accountDetail.getCustomer().getId(), accountDetail.getCustomer()));
+			a.setAvatar(accountDetail.getAvatar());
+			a.setPw(accountDetail.getPw());
+			return accountRepository.save(a);
+		}
+		return accountRepository.save(accountDetail);
+	}
+	
 }
