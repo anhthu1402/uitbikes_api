@@ -51,6 +51,10 @@ public class InvoiceService {
 			invoice.addProduct(productRepository.findById(i.getId()).get(), i.getQuantity());
 		}
 		
+		Customer cus = order.getCustomer();
+		cus.setBalance(cus.getBalance() - order.getTotal());
+		customerRepository.save(cus);
+		
 		return invoiceRepository.save(invoice);
 	}
 	
