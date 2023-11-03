@@ -3,7 +3,6 @@ package com.java.uitbikes.service;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +36,20 @@ public class InvoiceService {
 		Date purchasedDate= Date.from(Instant.now());
 		invoice.setDate(purchasedDate);
 //		invoice.setCustomer(customerRepository.findById(invoice.getCustomer().getId()).get());
+		
+		return invoiceRepository.save(invoice);
+	}
+	
+	//create invoice draft
+	public Invoice PostInvoice(InvoicePostDto order) {
+		Invoice invoice = new Invoice();
+		Date purchasedDate= Date.from(Instant.now());
+		invoice.setDate(purchasedDate);
+		invoice.setCustomer(order.getCustomer());
+		invoice.setTotal(order.getTotal());
+		for (InvoiceItemDto i: order.getDetails()) {
+			invoice.addProduct(productRepository.findById(i.getId()).get(), i.getQuantity());
+		}
 		
 		return invoiceRepository.save(invoice);
 	}

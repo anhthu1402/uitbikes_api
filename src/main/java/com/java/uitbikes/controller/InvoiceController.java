@@ -1,5 +1,7 @@
 package com.java.uitbikes.controller;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.java.uitbikes.dto.InvoiceDto;
+import com.java.uitbikes.dto.InvoiceItemDto;
+import com.java.uitbikes.dto.InvoicePostDto;
 import com.java.uitbikes.dto.RevenueMonths;
 import com.java.uitbikes.model.Invoice;
 import com.java.uitbikes.model.InvoiceDetail;
@@ -29,6 +33,12 @@ public class InvoiceController {
 	@RequestMapping(value = "/countinvoice", method = RequestMethod.GET)
 	public Long countInvoice() {
 		return invoiceRepository.count();
+	}
+	
+	//create invoice draft
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public Invoice PostInvoice(@RequestBody InvoicePostDto order) {
+		return invoiceService.PostInvoice(order);
 	}
 	
 	//create invoice
