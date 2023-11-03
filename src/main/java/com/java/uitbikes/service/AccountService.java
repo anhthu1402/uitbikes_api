@@ -151,15 +151,15 @@ public class AccountService {
 	}
 	
 	//set admin
-	public AccountDto setIsAdmin(String username, boolean isAdmin) {
+	public boolean setIsAdmin(String username, boolean isAdmin) {
 		Optional<Account> account = accountRepository.findByUsername(username);
 		if(account.isPresent()) {
 //			Account a = account.get();
 			account.get().setIsAdmin(isAdmin);
 			accountRepository.save(account.get());
-			return new AccountDto(account.get());
+			return true;
 		}
-		return null;
+		return false;
 	}
 	
 	//check password
@@ -181,7 +181,7 @@ public class AccountService {
 			Account a = account.get();
 			a.setCustomer(customerService.updateCustomer(accountDetail.getCustomer().getId(), accountDetail.getCustomer()));
 			a.setAvatar(accountDetail.getAvatar());
-			a.setPw(accountDetail.getPw());
+//			a.setPw(accountDetail.getPw());
 			return accountRepository.save(a);
 		}
 		return accountRepository.save(accountDetail);

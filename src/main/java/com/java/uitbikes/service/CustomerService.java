@@ -57,6 +57,16 @@ public class CustomerService {
 			return customerRepository.save(customerDetail);
 		}
 		
+		//update balance
+		public Customer updateBalance(Long id, Long balance) {
+			Optional<Customer> customer = customerRepository.findById(id);
+			if(customer.isPresent()) {
+				customer.get().setBalance(balance);
+				return customerRepository.save(customer.get());
+			}
+			return null;
+		}
+		
 	
 	
 }

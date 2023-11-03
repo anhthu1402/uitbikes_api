@@ -26,7 +26,7 @@ public class Account {
 	private String email;
 	
 	@Column(name= "is_admin")
-	private Boolean isAdmin;
+	private Boolean isAdmin = false;
 	
 	@Column(name= "avatar")
 	private String avatar = "https://res.cloudinary.com/dpwehcnso/image/upload/v1695480885/uitbikes/uitbiker1_pwb3z9.png?fbclid=IwAR0wlDrmAZq-7ltfJ62phszK9Y-J98ly2em7OvIa5_pH2dSKdJDskZymumE";

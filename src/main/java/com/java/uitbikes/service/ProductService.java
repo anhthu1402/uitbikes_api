@@ -149,9 +149,9 @@ public class ProductService {
 		else {
 			Optional<Type> type = typeRepository.findById(type_id);
 			if(type.isPresent()) {
-				for (Product productDto : products) {
-					if(productDto.getType().getId().equals(type_id)) {
-						result.add(productDto);
+				for (Product product : products) {
+					if(product.getType().getId().equals(type_id)) {
+						result.add(product);
 					}
 				}
 				return result;
@@ -161,25 +161,25 @@ public class ProductService {
 	}
 	
 	// get all products by type id (for admin)
-		public List<Product> getAllProductsByTypeId(Long type_id){
-			List<Product> products = getAllProducts();
-			List<Product> result = new ArrayList<Product>();
-			if(type_id == 0) {
-				return products;
-			}
-			else {
-				Optional<Type> type = typeRepository.findById(type_id);
-				if(type.isPresent()) {
-					for (Product productDto : products) {
-						if(productDto.getType().getId().equals(type_id)) {
-							result.add(productDto);
-						}
-					}
-					return result;
-				}
-				return null;
-			}
+	public List<Product> getAllProductsByTypeId(Long type_id){
+		List<Product> products = getAllProducts();
+		List<Product> result = new ArrayList<Product>();
+		if(type_id == 0) {
+			return products;
 		}
+		else {
+			Optional<Type> type = typeRepository.findById(type_id);
+			if(type.isPresent()) {
+				for (Product product : products) {
+					if(product.getType().getId().equals(type_id)) {
+						result.add(product);
+					}
+				}
+				return result;
+			}
+			return null;
+		}
+	}
 	
 	// get all products detail by brand id 
 	public List<Product> getAllProductsDetailByBrandId(Long brand_id){
@@ -187,9 +187,9 @@ public class ProductService {
 		List<Product> result = new ArrayList<Product>();
 		Optional<Brand> brand = brandRepository.findById(brand_id);
 		if(brand.isPresent()) {
-			for (Product productDto : products) {
-				if(productDto.getBrand().getId().equals(brand_id)) {
-					result.add(productDto);
+			for (Product product : products) {
+				if(product.getBrand().getId().equals(brand_id)) {
+					result.add(product);
 				}
 			}
 			return result;
@@ -211,17 +211,17 @@ public class ProductService {
 	}
 	
 	// set brand
-		public Product setBrand(Long p_id, Long brand_id) {
-			Optional<Product> product = productRepository.findById(p_id);
-			Optional<Brand> brand = brandRepository.findById(brand_id);
-			if(brand.isPresent() && product.isPresent()) {
-				Product p = product.get();
-				Brand b = brand.get();
-				p.setBrand(b);
-				return productRepository.save(p);
-			}
-			return null;
+	public Product setBrand(Long p_id, Long brand_id) {
+		Optional<Product> product = productRepository.findById(p_id);
+		Optional<Brand> brand = brandRepository.findById(brand_id);
+		if(brand.isPresent() && product.isPresent()) {
+			Product p = product.get();
+			Brand b = brand.get();
+			p.setBrand(b);
+			return productRepository.save(p);
 		}
+		return null;
+	}
 	
 	// update product
 	public Product updateProduct(Long id, Product pDetail) {
@@ -255,4 +255,65 @@ public class ProductService {
 		}
 		return false;
 	}
+	
+	// get range of cc
+	public List<Long> getRangeOfCc(){
+		List<Product> listProducts = getAllProducts();
+		Long max = listProducts.get(0).getCc();
+		Long min = listProducts.get(0).getCc();
+		for (Product product : listProducts) {
+			Long cc = product.getCc();
+			if(cc > max) {
+				max = cc;
+			}
+			if(cc < min) {
+				min = cc;
+			}
+		}
+		List<Long> result = new ArrayList<Long>();
+		result.add(min);
+		result.add(max);
+		return result;
+	}
+	
+	// get range of date_manu
+	public List<Long> getRangeOfDateManu(){
+		List<Product> listProducts = getAllProducts();
+		Long max = listProducts.get(0).getDate();
+		Long min = listProducts.get(0).getDate();
+		for (Product product : listProducts) {
+			Long date = product.getDate();
+			if(date > max) {
+				max = date;
+			}
+			if(date < min) {
+				min = date;
+			}
+		}
+		List<Long> result = new ArrayList<Long>();
+		result.add(min);
+		result.add(max);
+		return result;
+	}
+	
+	// get range of price
+	public List<Long> getRangeOfPrice(){
+		List<Product> listProducts = getAllProducts();
+		Long max = listProducts.get(0).getPrice();
+		Long min = listProducts.get(0).getPrice();
+		for (Product product : listProducts) {
+			Long price = product.getPrice();
+			if(price > max) {
+				max = price;
+			}
+			if(price < min) {
+				min = price;
+			}
+		}
+		List<Long> result = new ArrayList<Long>();
+		result.add(min);
+		result.add(max);
+		return result;
+	}
+	
 }
