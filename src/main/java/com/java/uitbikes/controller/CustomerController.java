@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.model.Customer;
 //import com.java.uitbikes.repository.CustomerRepository;
 import com.java.uitbikes.service.CustomerService;
@@ -40,9 +41,9 @@ public class CustomerController {
 	}
 	
 	//update customer
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customerDetail) {
-		return customerService.updateCustomer(id, customerDetail);
+	@RequestMapping(value = "/{username}", method = RequestMethod.PUT)
+	public AccountDto updateCustomer(@PathVariable(value = "username") String username, @RequestBody Customer customerDetail) {
+		return customerService.updateCustomer(username, customerDetail);
 	}
 	//update balance
 	@RequestMapping(value = "/{id}/balance/{balance}", method = RequestMethod.PUT)

@@ -14,7 +14,6 @@ import com.java.uitbikes.dto.AccountDto;
 import com.java.uitbikes.dto.AvatarDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.LoginForm;
-import com.java.uitbikes.model.Product;
 import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.service.AccountService;
 import com.java.uitbikes.service.CustomerService;
@@ -104,12 +103,6 @@ public class AccountController {
 	@RequestMapping(value = "/check-password", method = RequestMethod.POST)
 	public boolean checkPassword(@RequestBody LoginForm loginForm) {
 		return accountService.checkPassword(loginForm);
-	}
-	
-	//Update account
-	@RequestMapping(value = "/{username}", method = RequestMethod.PUT)
-	public Account updateAccount(@PathVariable(value = "username") String username, @RequestBody Account a) {
-		return accountService.updateAccount(username, a);
 	}
 	
 }

@@ -12,8 +12,6 @@ import com.java.uitbikes.dto.AvatarDto;
 import com.java.uitbikes.model.Account;
 import com.java.uitbikes.model.Customer;
 import com.java.uitbikes.model.LoginForm;
-import com.java.uitbikes.model.Product;
-import com.java.uitbikes.model.Type;
 import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.repository.CustomerRepository;
 
@@ -172,19 +170,5 @@ public class AccountService {
 			}
 		}
 		return false;
-	}
-	
-	//Update account
-	public Account updateAccount(String username, Account accountDetail) {
-		Optional<Account> account = accountRepository.findByUsername(username);
-		if(account.isPresent()) {
-			Account a = account.get();
-			a.setCustomer(customerService.updateCustomer(accountDetail.getCustomer().getId(), accountDetail.getCustomer()));
-			a.setAvatar(accountDetail.getAvatar());
-//			a.setPw(accountDetail.getPw());
-			return accountRepository.save(a);
-		}
-		return accountRepository.save(accountDetail);
-	}
-	
+	}	
 }

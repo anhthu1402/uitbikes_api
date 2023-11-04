@@ -23,7 +23,7 @@ public class Customer {
 	private String address;
 	
 	@Column(name = "phone")
-	private Long phone;
+	private String phone;
 	
 	@Column(name = "dob")
 	private Date date;
@@ -38,7 +38,7 @@ public class Customer {
 	private Long gender;
 	
 	@Column(name = "id_number")
-	private Long idNumber;
+	private String idNumber;
 	
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
@@ -64,7 +64,7 @@ public class Customer {
 	public String getName() {
 		return name;
 	}
-	public Long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 	public String getAddress() {
@@ -84,7 +84,6 @@ public class Customer {
 		this.id = id;
 	}
 	
-
 	public Date getRegisterDate() {
 		return registerDate;
 	}
@@ -93,11 +92,11 @@ public class Customer {
 		this.registerDate = registerDate;
 	}
 
-	public Long getIdNumber() {
+	public String getIdNumber() {
 		return idNumber;
 	}
 
-	public void setIdNumber(Long idNumber) {
+	public void setIdNumber(String idNumber) {
 		this.idNumber = idNumber;
 	}
 
@@ -115,7 +114,7 @@ public class Customer {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public void setPhone(Long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public void setDate(Date date) {
@@ -136,7 +135,7 @@ public class Customer {
 	public void setCarts(List<Cart> carts) {
 		this.carts = carts;
 	}
-	
+
 	public void addCart(Cart cart) {
 		this.carts.add(cart);
 	}
