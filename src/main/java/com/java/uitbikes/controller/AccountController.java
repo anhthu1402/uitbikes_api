@@ -101,7 +101,7 @@ public class AccountController {
 	}
 	
 	//check password
-	@RequestMapping(value = "/check-password", method = RequestMethod.GET)
+	@RequestMapping(value = "/check-password", method = RequestMethod.POST)
 	public boolean checkPassword(@RequestBody LoginForm loginForm) {
 		return accountService.checkPassword(loginForm);
 	}
