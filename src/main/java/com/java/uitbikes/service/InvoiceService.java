@@ -48,7 +48,7 @@ public class InvoiceService {
 		invoice.setCustomer(order.getCustomer());
 		invoice.setTotal(order.getTotal());
 		for (InvoiceItemDto i: order.getDetails()) {
-			invoice.addProduct(productRepository.findById(i.getId()).get(), i.getQuantity());
+			invoice.addProduct(i.getProduct(), i.getQuantity());
 		}
 		
 		Customer cus = order.getCustomer();
