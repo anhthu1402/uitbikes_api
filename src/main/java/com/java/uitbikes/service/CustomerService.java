@@ -56,8 +56,6 @@ public class CustomerService {
 			customer.setIdNumber(customerDetail.getIdNumber());
 			customer.setPhone(customerDetail.getPhone());
 			customerRepository.save(customer);
-//			a.setCustomer(customer);
-//			accountRepository.save(a);
 			return new AccountDto(a);
 		}
 		return new AccountDto(account.get());
