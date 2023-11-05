@@ -48,8 +48,16 @@ public class CustomerService {
 		Optional<Account> account = accountRepository.findByUsername(username);
 		if(account.isPresent()) {
 			Account a = account.get();
-			a.setCustomer(customerDetail);
-			accountRepository.save(a);
+			Customer customer = a.getCustomer();
+			customer.setName(customerDetail.getName());
+			customer.setAddress(customerDetail.getAddress());
+			customer.setDate(customerDetail.getDate());
+			customer.setGender(customerDetail.getGender());
+			customer.setIdNumber(customerDetail.getIdNumber());
+			customer.setPhone(customerDetail.getPhone());
+			customerRepository.save(customer);
+//			a.setCustomer(customer);
+//			accountRepository.save(a);
 			return new AccountDto(a);
 		}
 		return new AccountDto(account.get());
