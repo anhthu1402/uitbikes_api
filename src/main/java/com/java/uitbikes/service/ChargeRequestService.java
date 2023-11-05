@@ -40,6 +40,11 @@ public class ChargeRequestService {
 		Optional<ChargeRequest> request = chargeRequestRepository.findById(id);
 		if(request.isPresent()) {
 			ChargeRequest req = request.get();
+			if(status==1) {
+				Customer customer = req.getCustomer();
+				customer.setBalance(customer.getBalance() + req.getMoney());
+				customerRepository.save(customer);
+			}
 			req.setStatus(status);
 			return chargeRequestRepository.save(req);
 		}
