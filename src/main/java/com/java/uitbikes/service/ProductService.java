@@ -1,6 +1,7 @@
 package com.java.uitbikes.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.java.uitbikes.dto.ProductDetailDto;
 import com.java.uitbikes.dto.ProductDto;
+import com.java.uitbikes.dto.SearchProductForm;
 import com.java.uitbikes.model.Brand;
 import com.java.uitbikes.model.Product;
 import com.java.uitbikes.model.Type;
@@ -316,7 +318,103 @@ public class ProductService {
 		return result;
 	}
 	
-	// search product
+	// get list product active
+	public List<Product> getAllProductActive(){
+		List<Product> result = new ArrayList<Product>();
+		List<Product> list = getAllProducts();
+		for (Product product : list) {
+			if(product.getIsActive()==(long)1) {
+				result.add(product);
+			}
+		}
+		return result;
+	}
 	
+	// search product
+	public List<Product> searchProduct(SearchProductForm form) {
+		List<Long> rangePrice = form.rangePrice;
+		List<Long> rangeCc = form.rangeCc;
+		List<Long> rangeDateManu = form.rangeDateManu;
+		Long brandId = form.brandId;
+		Long typeId = form.typeId;
+		List<String> colorArray = form.colorArray;
+		List<Product> result = getAllProductActive();
+		List<Product> arrayRemove = new ArrayList<>();
+		if(brandId != null) {
+			for (Product product : result) {
+				if(product.getBrand().getId()!= brandId) {
+					arrayRemove.add(product);
+				}
+			}
+			for (Product product : arrayRemove) {
+				result.remove(product);
+			}
+			arrayRemove.clear();
+		}
+		if(!result.isEmpty()) {
+			if(typeId != null) {
+				for (Product product : result) {
+					if(product.getType().getId()!= typeId) {
+						arrayRemove.add(product);
+					}
+				}
+				for (Product product : arrayRemove) {
+					result.remove(product);
+				}
+				arrayRemove.clear();
+			}
+			for (Product product : result) {
+				if(product.getPrice()<rangePrice.get(0) || product.getPrice()>rangePrice.get(1)) {
+					arrayRemove.add(product);
+				}
+			}
+			if(!arrayRemove.isEmpty()) {
+				for (Product product : arrayRemove) {
+					result.remove(product);
+				}
+				arrayRemove.clear();
+			}
+			for (Product product : result) {
+				if(product.getCc()<rangeCc.get(0) || product.getCc()>rangeCc.get(1)) {
+					arrayRemove.add(product);
+				}
+			}
+			if(!arrayRemove.isEmpty()) {
+				for (Product product : arrayRemove) {
+					result.remove(product);
+				}
+				arrayRemove.clear();
+			}
+			for (Product product : result) {
+				if(product.getDate()<rangeDateManu.get(0) || product.getDate()>rangeDateManu.get(1)) {
+					arrayRemove.add(product);
+				}
+			}
+			if(!arrayRemove.isEmpty()) {
+				for (Product product : arrayRemove) {
+					result.remove(product);
+				}
+				arrayRemove.clear();
+			}
+			if(!colorArray.isEmpty()) {
+				for (Product product : result) {
+					if(!colorArray.contains(product.getColor())) {
+						arrayRemove.add(product);
+					}
+				}
+				if(!arrayRemove.isEmpty()) {
+					for (Product product : arrayRemove) {
+						result.remove(product);
+					}
+					arrayRemove.clear();
+				}
+				if(result.isEmpty()) {
+					return null;
+				}
+			}
+			return result;
+		}
+		return null;
+	}
 	
 }

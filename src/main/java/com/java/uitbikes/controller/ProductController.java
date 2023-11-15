@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.java.uitbikes.dto.ProductDto;
+import com.java.uitbikes.dto.SearchProductForm;
 import com.java.uitbikes.model.Product;
-import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.repository.ProductRepository;
 import com.java.uitbikes.service.ProductService;
 
@@ -137,5 +137,11 @@ public class ProductController {
 	@RequestMapping(value = "/price", method = RequestMethod.GET)
 	public List<Long> getRangeOfPrice(){
 		return productService.getRangeOfPrice();
+	}
+	
+	// search product
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public List<Product> searchProduct(@RequestBody SearchProductForm form){
+		return productService.searchProduct(form);
 	}
 }
