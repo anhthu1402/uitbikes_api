@@ -53,7 +53,7 @@ public class ProductService {
 		List<Product> products = getAllProducts();
 		List<Product> result = new ArrayList<Product>();
 		for (Product product : products) {
-			if(product.getName().contains(name)) {
+			if(product.getName().toLowerCase().contains(name.toLowerCase())) {
 				result.add(product);
 			}
 		}
