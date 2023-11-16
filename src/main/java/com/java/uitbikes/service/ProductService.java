@@ -57,6 +57,9 @@ public class ProductService {
 				result.add(product);
 			}
 		}
+		if(result.isEmpty()) {
+			return null;
+		}
 		return result;
 	}
 	
