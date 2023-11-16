@@ -411,9 +411,6 @@ public class ProductService {
 					}
 					arrayRemove.clear();
 				}
-				if(result.isEmpty()) {
-					return null;
-				}
 			}
 			if(result.isEmpty()) {
 				return null;
