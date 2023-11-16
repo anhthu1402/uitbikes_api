@@ -415,6 +415,9 @@ public class ProductService {
 					return null;
 				}
 			}
+			if(result.isEmpty()) {
+				return null;
+			}
 			return result;
 		}
 		return null;
