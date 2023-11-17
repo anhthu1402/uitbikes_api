@@ -62,6 +62,8 @@ public class InvoiceService {
 	public Invoice addProduct(Long id, Long pId, int quantity) {
 		Invoice invoice = invoiceRepository.findById(id).get();
 		Product product = productRepository.findById(pId).get();
+		product.setQuantity(product.getQuantity() - quantity);
+		productRepository.save(product);
 		invoice.addProduct(product, quantity);
 		
 		return invoiceRepository.save(invoice);
@@ -179,6 +181,12 @@ public class InvoiceService {
 				Customer cus = customerRepository.findById(req.getCustomer().getId()).get();
 				cus.setBalance(cus.getBalance()+req.getTotal());
 				customerRepository.save(cus);
+				List<InvoiceDetail> details = req.getDetails();
+				for (InvoiceDetail invoiceDetail : details) {
+					Product product = invoiceDetail.getProduct();
+					product.setQuantity(product.getQuantity() + invoiceDetail.getQuantity());
+					productRepository.save(product);
+				}
 			}
 			return invoiceRepository.save(req);
 		}
