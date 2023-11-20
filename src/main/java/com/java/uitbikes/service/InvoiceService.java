@@ -40,7 +40,7 @@ public class InvoiceService {
 		return invoiceRepository.save(invoice);
 	}
 	
-	//create invoice draft
+	//create invoice at once
 	public Invoice PostInvoice(InvoicePostDto order) {
 		Invoice invoice = new Invoice();
 		Date purchasedDate= Date.from(Instant.now());
@@ -48,6 +48,9 @@ public class InvoiceService {
 		invoice.setCustomer(order.getCustomer());
 		invoice.setTotal(order.getTotal());
 		for (InvoiceItemDto i: order.getDetails()) {
+			Product product = i.getProduct();
+			product.setQuantity(product.getQuantity() - i.getQuantity());
+			productRepository.save(product);
 			invoice.addProduct(i.getProduct(), i.getQuantity());
 		}
 		
