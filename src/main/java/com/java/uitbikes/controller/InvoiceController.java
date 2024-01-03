@@ -1,22 +1,14 @@
 package com.java.uitbikes.controller;
 
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.java.uitbikes.dto.InvoiceDto;
-import com.java.uitbikes.dto.InvoiceItemDto;
 import com.java.uitbikes.dto.InvoicePostDto;
 import com.java.uitbikes.dto.RevenueMonths;
 import com.java.uitbikes.model.Invoice;
-import com.java.uitbikes.model.InvoiceDetail;
-import com.java.uitbikes.model.Product;
-import com.java.uitbikes.model.Type;
-import com.java.uitbikes.repository.AccountRepository;
 import com.java.uitbikes.repository.InvoiceRepository;
 import com.java.uitbikes.service.InvoiceService;
 
@@ -97,7 +89,7 @@ public class InvoiceController {
 	
 	//get best selling product
 	@RequestMapping(value = "/bestsell/product", method = RequestMethod.GET)
-	public InvoiceDetail getBestSellingProduct() {
+	public Object getBestSellingProduct() {
 		return invoiceService.getBestSellingProduct();
 	}
 	

@@ -155,18 +155,125 @@ public class InvoiceService {
 		return new RevenueMonths(allDates, allRevenues);
 	}
 	
-	public InvoiceDetail getBestSellingProduct() {
-		return detailRepository.findBestSellProduct();
+	public Object getBestSellingProduct() {
+		List<Invoice> invoices = invoiceRepository.findByStatus(2);
+		List<Product> products = productRepository.findAll();
+		int maxCount = 0;
+		Product product = new Product();
+		int sum = 0;
+		
+		for (Product p: products) {
+			int count = 0;
+			for (Invoice i: invoices) {
+				List<InvoiceDetail> details = i.getDetails();
+				for (InvoiceDetail d: details) {
+					if(d.getProduct().getId() == p.getId()) {
+						count += d.getQuantity();
+					}
+				}
+			}
+			if (count > maxCount) {
+				maxCount = count;
+				product = p;
+			}
+		}
+		
+		for (Invoice i: invoices) {
+			List<InvoiceDetail> details = i.getDetails();
+			for (InvoiceDetail d: details) {
+				sum += d.getQuantity();
+			}
+		}
+		
+		Map<String, Object> result = new HashMap<>();
+	    result.put("name", product.getName());
+	    result.put("count", maxCount);
+	    result.put("percent", maxCount * 100 / sum);
+
+	    return result;
+		
 	}
 	
 	//get best selling type
 	public Object getBestSellingType() {
-		return typeRepository.findBestSellType();
+		List<Invoice> invoices = invoiceRepository.findByStatus(2);
+		List<Type> types = typeRepository.findAll();
+		
+		int maxCount = 0;
+		Type type = new Type();
+		int sum = 0;
+		
+		for (Invoice i: invoices) {
+			List<InvoiceDetail> details = i.getDetails();
+			for (InvoiceDetail d: details) {
+				sum += d.getQuantity();
+			}
+		}
+		
+		for (Type t: types) {
+			int count = 0;
+			for (Invoice i: invoices) {
+				List<InvoiceDetail> details = i.getDetails();
+				for (InvoiceDetail d: details) {
+					if(d.getProduct().getType().getId() == t.getId()) {
+						count += d.getQuantity();
+					}
+				}
+			}
+			
+			if (count > maxCount) {
+				maxCount = count;
+				type = t;
+			}
+		}
+		
+		Map<String, Object> result = new HashMap<>();
+	    result.put("name", type.getName());
+	    result.put("count", maxCount);
+	    result.put("percent", maxCount * 100 / sum);
+
+	    return result;
 	}
 	
 	//get best selling brand
 	public Object getBestSellingBrand() {
-		return brandRepository.findBestSellBrand();
+		List<Invoice> invoices = invoiceRepository.findByStatus(2);
+		List<Brand> brands = brandRepository.findAll();
+		
+		int maxCount = 0;
+		Brand brand = new Brand();
+		int sum = 0;
+		
+		for (Invoice i: invoices) {
+			List<InvoiceDetail> details = i.getDetails();
+			for (InvoiceDetail d: details) {
+				sum += d.getQuantity();
+			}
+		}
+		
+		for (Brand b: brands) {
+			int count = 0;
+			for (Invoice i: invoices) {
+				List<InvoiceDetail> details = i.getDetails();
+				for (InvoiceDetail d: details) {
+					if(d.getProduct().getBrand().getId() == b.getId()) {
+						count += d.getQuantity();
+					}
+				}
+			}
+			
+			if (count > maxCount) {
+				maxCount = count;
+				brand = b;
+			}
+		}
+		
+		Map<String, Object> result = new HashMap<>();
+	    result.put("name", brand.getName());
+	    result.put("count", maxCount);
+	    result.put("percent", maxCount * 100 / sum);
+
+	    return result;
 	}
 	
 	//count Customer purchased today
