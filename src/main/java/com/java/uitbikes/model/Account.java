@@ -1,9 +1,15 @@
 package com.java.uitbikes.model;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -30,6 +36,14 @@ public class Account {
 	
 	@Column(name= "avatar")
 	private String avatar = "https://res.cloudinary.com/dpwehcnso/image/upload/v1695480885/uitbikes/uitbiker1_pwb3z9.png?fbclid=IwAR0wlDrmAZq-7ltfJ62phszK9Y-J98ly2em7OvIa5_pH2dSKdJDskZymumE";
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "sender")
+	private List<Message> messages = new ArrayList<Message>();
+	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+	private Conversation conversation;
 	
 	public Account() {}
 	
@@ -81,4 +95,21 @@ public class Account {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public Conversation getConversation() {
+		return conversation;
+	}
+
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
+	}
+	
 }
