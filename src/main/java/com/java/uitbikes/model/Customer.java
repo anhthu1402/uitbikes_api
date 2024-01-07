@@ -56,6 +56,10 @@ public class Customer {
 	@OneToMany(mappedBy="customer")
 	private List<ChargeRequest> chargeRequests = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
+	private List<Review> reviews = new ArrayList<Review>();
+	
 	public Customer() {}
 	
 	public Long getId() {
@@ -158,5 +162,13 @@ public class Customer {
 	
 	public void setInvoices(List<Invoice> invoices) {
 		this.invoices = invoices;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 }

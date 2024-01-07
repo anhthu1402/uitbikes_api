@@ -24,6 +24,10 @@ public class InvoiceDetail {
 	@Column(name = "quantity")
 	private int quantity;
 	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "detail")
+	private Review review;
+	
 	public InvoiceDetail() {}
 	
 	public InvoiceDetail(Invoice invoice, Product product, int quantity) {
@@ -62,5 +66,13 @@ public class InvoiceDetail {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public Review getReview() {
+		return review;
+	}
+
+	public void setReview(Review review) {
+		this.review = review;
 	}
 }
