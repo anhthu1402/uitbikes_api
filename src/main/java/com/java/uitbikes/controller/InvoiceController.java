@@ -117,4 +117,9 @@ public class InvoiceController {
 		return invoiceService.updateInvoice(invoice_id, status);
 	}
 
+	//find unreviewed products from invoices with status = 2 by customer id
+	@RequestMapping(value = "/unreviewed/customer/{id}", method = RequestMethod.GET)
+	public List<Object> findUnreviewedProductsByCustomerId (@PathVariable(value = "id") Long customer_id) {
+		return invoiceService.findUnreviewedProductsByCustomerId(customer_id);
+	}
 }

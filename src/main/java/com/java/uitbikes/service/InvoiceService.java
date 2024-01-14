@@ -302,4 +302,34 @@ public class InvoiceService {
 		}
 		return request.get();
 	}
+	
+	//find unreviewed products from invoices with status = 2 by customer id
+	public List<Object> findUnreviewedProductsByCustomerId (Long customer_id) {
+		Customer customer = customerRepository.findById(customer_id).get();
+		List<Invoice> invoices = customer.getInvoices();
+		List<Object> result = new ArrayList<>();
+		
+        for (Invoice i: invoices) {
+			if (i.getStatus() == 2) {
+//				invoices.remove(i);
+				List<InvoiceDetail> details = i.getDetails();
+				for (InvoiceDetail d: details) {
+					if (d.getReview() == null) {
+						Map<String, Object> item = new HashMap<>();
+						item.put("invoiceId", i.getId());
+						item.put("purchasedDate", i.getDate());
+						item.put("detailId", d.getId());
+						item.put("pId", d.getProduct().getId());
+						item.put("pName", d.getProduct().getName());
+						item.put("pImg", d.getProduct().getImage());
+						item.put("pColor", d.getProduct().getColor());
+						
+						result.add(item);
+					}
+				}
+			}
+		}
+        
+        return result;
+	}
 }
