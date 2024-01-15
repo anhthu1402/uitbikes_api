@@ -84,6 +84,27 @@ public class ReviewService {
 		return result;
 	}
 	
+	//get by id
+	public ReviewDto findById(Long id) {
+		Optional<Review> review = reviewRepository.findById(id);
+		
+		if (review.isPresent()) {
+			Review r = review.get();
+			ReviewDto result = new ReviewDto();
+			result.setId(r.getId());
+			result.setRate(r.getRate());
+			result.setText(r.getText());
+			result.setTimestamp(r.getTimestamp());
+			result.setUsername(accountRepository.findByCustomerId(r.getCustomer().getId()).getUsername());
+			result.setProduct(r.getDetail().getProduct());
+			result.setImages(r.getImages());
+			
+			return result;
+		}
+		
+		return null;
+	}
+	
 	//get by customer id
 	public List<ReviewDto> findByCustomerId(Long id) {
 		Account account = accountRepository.findByCustomerId(id);

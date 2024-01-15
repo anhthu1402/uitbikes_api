@@ -27,6 +27,12 @@ public class ReviewController {
 		return reviewService.getAllReviews();
 	}
 	
+	//get by id
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ReviewDto findById(@PathVariable(value = "id") Long id) {
+		return reviewService.findById(id);
+	}
+	
 	//get by customer id
 	@RequestMapping(value = "/customer/{id}", method = RequestMethod.GET)
 	public List<ReviewDto> findByCustomerId(@PathVariable(value = "id") Long id) {
