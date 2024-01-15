@@ -68,4 +68,10 @@ public class ReviewController {
 	public Boolean deleteReview(@PathVariable(value = "id") Long id) {
 		return reviewService.deleteReview(id);
 	}
+	
+	// check if invoice has been reviewed
+	@RequestMapping(value = "/invoice/{invoice-id}", method = RequestMethod.GET)
+	public Boolean checkInvoiceDetailReviewed(@PathVariable(value = "invoice-id")Long invoiceId) {
+		return reviewService.checkInvoiceDetailReviewed(invoiceId);
+	}
 }

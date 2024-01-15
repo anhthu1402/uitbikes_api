@@ -34,6 +34,9 @@ public class ReviewService {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	InvoiceRepository invoiceRepository;
 
 	//create
 	public Boolean createReview(ReviewRequestDto body) {
@@ -258,6 +261,22 @@ public class ReviewService {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	// check if invoice has been reviewed
+	public Boolean checkInvoiceDetailReviewed(Long invoiceId) {
+		Optional<Invoice> optional = invoiceRepository.findById(invoiceId);
+		if(optional.isPresent()) {
+			Invoice invoice = optional.get();
+			List<ReviewDto> list = findByCustomerId(invoice.getCustomer().getId());
+			for (ReviewDto reviewDto : list) {
+				Review review = reviewRepository.findById(reviewDto.getId()).get();
+				if(review.getDetail().getInvoice().getId() == invoiceId) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 }
